@@ -5,7 +5,7 @@ import HomeSectionCard from '../HomeSectionCard/HomeSectionCard';
 import SharedTitle from '../SharedTitle/SharedTitle';
 // import { mensShirt } from '../../Assets/Mens/MensShirt';
 
-const HomeSectionCatalog = ({ data,title,subTitle }) => {
+const HomeSectionCatalog = ({ data, title, subTitle }) => {
     // const items = mensShirt
 
     // const responsive = {
@@ -42,9 +42,12 @@ const HomeSectionCatalog = ({ data,title,subTitle }) => {
 
                 </div>
                 <button aria-label="Slide forward" id="next" className="absolute right-0 z-30 p-2 mr-10 bg-opacity-50 rounded-full focus:outline-none focus:dark:bg-gray-600 focus:ring-2 focus:ring-offset-2 focus:dark:ring-gray-600 dark:bg-gray-50">
-                    <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-4 h-4">
-                        <path d="M1 1L7 7L1 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
-                    </svg>
+                    <div className='flex  items-center'>
+                        <span className='font-bold '>Slide-</span>
+                        <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-4 h-4">
+                            <path d="M1 1L7 7L1 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
+                        </svg>
+                    </div>
                 </button>
             </div>
         </div>

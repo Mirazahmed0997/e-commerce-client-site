@@ -44,7 +44,7 @@ export default function Products() {
 
     const handleFilter = (value, sectionId) => {
         const searchParams = new URLSearchParams(location.search); // Get search params from the URL
-        console.log( searchParams.toString());
+        console.log(searchParams.toString());
 
         // Check if the sectionId exists in searchParams
         let filterValue = searchParams.get(sectionId) ? searchParams.get(sectionId).split(",") : [];
@@ -310,6 +310,7 @@ export default function Products() {
                                                             <div className="flex h-5 shrink-0 items-center">
                                                                 <div className="group grid size-4 grid-cols-1">
                                                                     <input
+                                                                        onChange={() => handleFilter(option.value, section.id)}
                                                                         defaultValue={option.value}
                                                                         defaultChecked={option.checked}
                                                                         id={`filter-${section.id}-${optionIdx}`}
