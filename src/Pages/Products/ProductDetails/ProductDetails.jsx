@@ -22,6 +22,9 @@ import { StarIcon } from '@heroicons/react/20/solid'
 import { Radio, RadioGroup } from '@headlessui/react'
 import { Box, Grid, Grid2, LinearProgress, Rating } from '@mui/material'
 import ProductReviewCard from './ProductReviewCard'
+import { womenDress } from '../../Assets/Womens/WomensDress'
+import HomeSectionCard from '../../Home/HomeSectionCard/HomeSectionCard'
+import ProductsCard from '../ProductsCard/ProductsCard'
 
 const product = {
     name: 'Basic Tee 6-Pack',
@@ -251,7 +254,7 @@ export default function ProductDetails() {
                 </section>
 
                 {/* ------ratings & reviews------ */}
-               
+
 
                 <section className="mt-32 md:p-6">
                     <h1 className="font-semibold text-lg pb-4">Recent Reviews & Ratings</h1>
@@ -295,6 +298,17 @@ export default function ProductDetails() {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </section>
+
+
+                {/* -----similiar products------ */}
+                <section className='pt-20'>
+                    <h2 className='py-5 font-bold text-xl'> Similiar Products</h2>
+                    <div className='flex flex-wrap justify-center space-y-5'>
+                        {
+                            womenDress.map((item)=><ProductsCard Products={item}></ProductsCard>)
+                        }
                     </div>
                 </section>
 

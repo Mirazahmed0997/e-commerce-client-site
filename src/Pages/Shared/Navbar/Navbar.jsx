@@ -297,7 +297,7 @@ export default function Navbar() {
                                         src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
                                         className="h-8 w-auto"
                                     />
-                                    <Link to='/'><p className='text-2xl font-bold'>City Mart</p></Link>
+                                    <Link to='/'><p className='text-2xl font-bold'>China Trade BD</p></Link>
                                 </a>
                             </div>
 
@@ -395,7 +395,7 @@ export default function Navbar() {
                                     </a>
                                 </div>
 
-                                <div className="hidden lg:ml-8 lg:flex">
+                                {/* <div className="hidden lg:ml-8 lg:flex">
                                     <a href="#" className="flex items-center text-gray-700 hover:text-gray-800">
                                         <img
                                             alt=""
@@ -405,7 +405,7 @@ export default function Navbar() {
                                         <span className="ml-3 block text-sm font-medium">CAD</span>
                                         <span className="sr-only">, change currency</span>
                                     </a>
-                                </div>
+                                </div> */}
 
                                 {/* Search */}
                                 <div className="flex lg:ml-6">
@@ -417,14 +417,14 @@ export default function Navbar() {
 
                                 {/* Cart */}
                                 <div className="ml-4 flow-root lg:ml-6">
-                                    <a href="#" className="group -m-2 flex items-center p-2">
+                                    <Link to='/cart'  className="group -m-2 flex items-center p-2">
                                         <ShoppingBagIcon
                                             aria-hidden="true"
                                             className="size-6 shrink-0 text-gray-400 group-hover:text-gray-500"
                                         />
-                                        <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
+                                        <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">4</span>
                                         <span className="sr-only">items in cart, view bag</span>
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
