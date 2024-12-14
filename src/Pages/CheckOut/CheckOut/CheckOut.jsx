@@ -51,101 +51,103 @@ export default function Checkout() {
 
     return (
         <div className="mt-32 p-4 md:p-6">
-        <div className="w-full">
-            <Box sx={{ width: '100%' }}>
-                <Stepper activeStep={activeStep}>
-                    {steps.map((label) => (
-                        <Step key={label}>
-                            <StepLabel>{label}</StepLabel>
-                        </Step>
-                    ))}
-                </Stepper>
-                {activeStep === steps.length ? (
-                    <React.Fragment>
-                        <Typography
-                            sx={{
-                                mt: 2,
-                                mb: 1,
-                                fontSize: { xs: '14px', sm: '16px', md: '18px' },
-                            }}
-                        >
-                            All steps completed - you&apos;re finished
-                        </Typography>
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                flexDirection: { xs: 'column', sm: 'row' },
-                                pt: 2,
-                            }}
-                        >
-                            <Box sx={{ flex: '1 1 auto' }} />
-                            <Button
-                                onClick={handleReset}
+            <div className="w-full">
+                <Box sx={{ width: '100%' }}>
+                    <Stepper activeStep={activeStep}>
+                        {steps.map((label) => (
+                            <Step key={label}>
+                                <StepLabel>{label}</StepLabel>
+                            </Step>
+                        ))}
+                    </Stepper>
+                    {activeStep === steps.length ? (
+                        <React.Fragment>
+                            <Typography
                                 sx={{
-                                    width: { xs: '100%', sm: 'auto' },
-                                    mt: { xs: 1, sm: 0 },
+                                    mt: 2,
+                                    mb: 1,
+                                    fontSize: { xs: '14px', sm: '16px', md: '18px' },
                                 }}
                             >
-                                Reset
-                            </Button>
-                        </Box>
-                    </React.Fragment>
+                                All steps completed - you&apos;re finished
+                            </Typography>
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    flexDirection: { xs: 'column', sm: 'row' },
+                                    pt: 2,
+                                }}
+                            >
+                                <Box sx={{ flex: '1 1 auto' }} />
+                                <Button
+                                    onClick={handleReset}
+                                    sx={{
+                                        width: { xs: '100%', sm: 'auto' },
+                                        mt: { xs: 1, sm: 0 },
+                                    }}
+                                >
+                                    Reset
+                                </Button>
+                            </Box>
+                        </React.Fragment>
+                    ) : (
+                        <React.Fragment>
+                            <Typography
+                                sx={{
+                                    mt: 2,
+                                    mb: 1,
+                                    fontSize: { xs: '14px', sm: '16px', md: '18px' },
+                                }}
+                            >
+                                Step {activeStep + 1}
+                            </Typography>
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    flexDirection: { xs: 'column', sm: 'row' },
+                                    pt: 2,
+                                }}
+                            >
+                                <Button
+                                    color="inherit"
+                                    disabled={activeStep === 0}
+                                    onClick={handleBack}
+                                    sx={{
+                                        mr: { sm: 1 },
+                                        mb: { xs: 1, sm: 0 },
+                                        width: { xs: '100%', sm: 'auto' },
+                                    }}
+                                >
+                                    Back
+                                </Button>
+                                <Box sx={{ flex: '1 1 auto' }} />
+                                <Button
+                                    onClick={handleNext}
+                                    sx={{
+                                        width: { xs: '100%', sm: 'auto' },
+                                    }}
+                                >
+                                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                                </Button>
+                            </Box>
+                        </React.Fragment>
+                    )}
+                </Box>
+            </div>
+            <div className="mt-6">
+                {activeStep === 1 ? (
+                    <div className="p-4 bg-gray-100 rounded-md shadow-md md:p-6">
+                        <DeliveryAddressForm />
+                    </div>
                 ) : (
-                    <React.Fragment>
-                        <Typography
-                            sx={{
-                                mt: 2,
-                                mb: 1,
-                                fontSize: { xs: '14px', sm: '16px', md: '18px' },
-                            }}
-                        >
-                            Step {activeStep + 1}
-                        </Typography>
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                flexDirection: { xs: 'column', sm: 'row' },
-                                pt: 2,
-                            }}
-                        >
-                            <Button
-                                color="inherit"
-                                disabled={activeStep === 0}
-                                onClick={handleBack}
-                                sx={{
-                                    mr: { sm: 1 },
-                                    mb: { xs: 1, sm: 0 },
-                                    width: { xs: '100%', sm: 'auto' },
-                                }}
-                            >
-                                Back
-                            </Button>
-                            <Box sx={{ flex: '1 1 auto' }} />
-                            <Button
-                                onClick={handleNext}
-                                sx={{
-                                    width: { xs: '100%', sm: 'auto' },
-                                }}
-                            >
-                                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                            </Button>
-                        </Box>
-                    </React.Fragment>
+                    <div className="p-4 bg-gray-100 rounded-md shadow-md md:p-6">
+                        <OrderSummary />
+                    </div>
                 )}
-            </Box>
+            </div>
         </div>
-        <div className="mt-6">
-            {activeStep === 1 ? (
-                <div className="p-4 bg-gray-100 rounded-md shadow-md md:p-6">
-                    <DeliveryAddressForm />
-                </div>
-            ) : (
-                <div className="p-4 bg-gray-100 rounded-md shadow-md md:p-6">
-                    <OrderSummary />
-                </div>
-            )}
-        </div>
-    </div>
-    
+
+
+
     );
 }
