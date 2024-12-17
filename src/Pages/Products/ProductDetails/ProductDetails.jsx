@@ -1,22 +1,3 @@
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    theme: {
-      extend: {
-        gridTemplateRows: {
-          '[auto,auto,1fr]': 'auto auto 1fr',
-        },
-      },
-    },
-  }
-  ```
-*/
-'use client'
-
 import { useState } from 'react'
 import { StarIcon } from '@heroicons/react/20/solid'
 import { Radio, RadioGroup } from '@headlessui/react'
@@ -85,17 +66,14 @@ function classNames(...classes) {
 }
 
 export default function ProductDetails() {
-    const [selectedColor, setSelectedColor] = useState(product.colors[0])
+    const [selectedImage, setSelectedImage] = useState(product.images[0].src) // State to track main image
     const [selectedSize, setSelectedSize] = useState(product.sizes[2])
 
     return (
         <div className="bg-white mt-32">
             <div className="pt-6">
                 <nav aria-label="Breadcrumb">
-                    <ol
-                        role="list"
-                        className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8"
-                    >
+                    <ol className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
                         {product.breadcrumbs.map((breadcrumb) => (
                             <li key={breadcrumb.id}>
                                 <div className="flex items-center">
@@ -133,23 +111,32 @@ export default function ProductDetails() {
                 <section className="grid grid-cols-1 gap-y-10 px-4 pt-10 sm:grid-cols-2 sm:gap-x-8 lg:gap-x-16">
                     {/* Image gallery */}
                     <div className="flex flex-col items-center">
+                        {/* Main Image */}
                         <div className="overflow-hidden rounded-lg w-full max-w-[30rem] max-h-[35rem]">
                             <img
-                                alt={product.images[0].alt}
-                                src={product.images[0].src}
-                                className="w-full rounded-lg object-cover"
+                                alt="Selected product"
+                                src={selectedImage}
+                                className="w-full h-full object-cover"
                             />
                         </div>
+
+                        {/* Thumbnail Images */}
                         <div className="flex flex-wrap justify-center space-x-4 mt-4">
                             {product.images.map((image) => (
                                 <div
                                     key={image.src}
-                                    className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg max-w-[5rem] max-h-[5rem]"
+                                    className={classNames(
+                                        'cursor-pointer p-1 border-2 rounded-md',
+                                        selectedImage === image.src
+                                            ? 'border-indigo-600'
+                                            : 'border-gray-200'
+                                    )}
+                                    onClick={() => setSelectedImage(image.src)} // Change main image
                                 >
                                     <img
                                         alt={image.alt}
                                         src={image.src}
-                                        className="w-full rounded-lg object-cover"
+                                        className="w-16 h-16 object-cover rounded-md"
                                     />
                                 </div>
                             ))}
@@ -307,7 +294,7 @@ export default function ProductDetails() {
                     <h2 className='py-5 font-bold text-xl'> Similiar Products</h2>
                     <div className='flex flex-wrap justify-center space-y-5'>
                         {
-                            womenDress.map((item)=><ProductsCard Products={item}></ProductsCard>)
+                            womenDress.map((item) => <ProductsCard Products={item}></ProductsCard>)
                         }
                     </div>
                 </section>

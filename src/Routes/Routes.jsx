@@ -21,11 +21,11 @@ import OrderDetails from "../Pages/Order/OrderDetails/OrderDetails";
             element:<Home></Home>
         },
         {
-            path:'/shop',
+            path:'/:products/:category/:subCategory',
             element:<Products></Products>
         },
         {
-            path:'/productDetails',
+            path:'/productDetails/:productId',
             element:<ProductDetails></ProductDetails>
         },
         {

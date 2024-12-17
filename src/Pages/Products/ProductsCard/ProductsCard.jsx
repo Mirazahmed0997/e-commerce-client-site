@@ -40,7 +40,7 @@ const ProductsCard = ({ Products }) => {
                 </div>
 
                 {/* Buy Now Button */}
-                <Link to="/productDetails">
+                <Link to={`/productDetails/${5}`}>
                     <button
                         type="button"
                         className="flex items-center justify-center w-full p-2 sm:p-3 font-semibold tracking-wide text-gray-50 bg-violet-600 hover:bg-violet-700 transition rounded-md"

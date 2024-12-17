@@ -16,7 +16,7 @@ import {
     TabPanels,
 } from '@headlessui/react'
 import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 
 const navigation = {
     categories: [
@@ -143,6 +143,13 @@ const navigation = {
 
 export default function Navbar() {
     const [open, setOpen] = useState(false)
+    const navigate = useNavigate();
+
+    // const handleCategoryClick = (category, section, item, close) => {
+    //     navigate(`/${category.id}/${section.id}/${item.name}`);
+    //     console.log(category, section, item.name)
+    // }
+
 
     return (
         <div className="fixed top-0 left-0 w-full z-50 bg-white shadow-lg  ">
@@ -218,9 +225,10 @@ export default function Navbar() {
                                                 >
                                                     {section.items.map((item) => (
                                                         <li key={item.name} className="flow-root">
-                                                            <a href={item.href} className="-m-2 block p-2 text-gray-500">
+                                                            <Link to={`${category.id}/${section.id}/${item.name}`} className="cursor-pointer hover:text-gray-800">
+
                                                                 {item.name}
-                                                            </a>
+                                                            </Link>
                                                         </li>
                                                     ))}
                                                 </ul>
@@ -309,8 +317,8 @@ export default function Navbar() {
                                         <Popover key={category.name} className="flex">
                                             <div className="relative flex">
                                                 <PopoverButton className="relative z-10 -mb-px flex items-center border-b-2 border-transparent pt-px text-sm font-medium text-gray-700 transition-colors duration-200 ease-out hover:text-gray-800 data-[open]:border-indigo-600 data-[open]:text-indigo-600">
-                                                    {/* {category.name} */}
-                                                    <Link to='/shop'>Shop</Link>
+                                                    {category.name}
+                                                    {/* <Link to='/shop'>Shop</Link> */}
                                                 </PopoverButton>
                                             </div>
 
@@ -355,9 +363,10 @@ export default function Navbar() {
                                                                         >
                                                                             {section.items.map((item) => (
                                                                                 <li key={item.name} className="flex">
-                                                                                    <a href={item.href} className="hover:text-gray-800">
+                                                                                    <Link to={`${category.id}/${section.id}/${item.name}`} className="cursor-pointer hover:text-gray-800">
+
                                                                                         {item.name}
-                                                                                    </a>
+                                                                                    </Link>
                                                                                 </li>
                                                                             ))}
                                                                         </ul>
@@ -393,7 +402,7 @@ export default function Navbar() {
                                     <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
                                         Create account
                                     </a>
-                                    <Link to='myOrders' className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                                    <Link to='/myOrders' className="text-sm font-medium text-gray-700 hover:text-gray-800">
                                         My Orders
                                     </Link>
                                 </div>
@@ -420,7 +429,7 @@ export default function Navbar() {
 
                                 {/* Cart */}
                                 <div className="ml-4 flow-root lg:ml-6">
-                                    <Link to='/cart'  className="group -m-2 flex items-center p-2">
+                                    <Link to='/cart' className="group -m-2 flex items-center p-2">
                                         <ShoppingBagIcon
                                             aria-hidden="true"
                                             className="size-6 shrink-0 text-gray-400 group-hover:text-gray-500"
