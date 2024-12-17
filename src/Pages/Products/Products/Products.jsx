@@ -99,7 +99,7 @@ export default function Products() {
                             </div>
 
                             {/* Filters */}
-                            <form className="mt-4 border-t border-gray-200">
+                            <form className="mt-4 border-t border-gray-200 mt-36">
                                 <h3 className="sr-only">Categories</h3>
 
                                 {filters.map((section) => (
@@ -166,7 +166,7 @@ export default function Products() {
                 </Dialog>
 
                 <main className="mx-auto  sm:px-6 ">
-                    <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
+                    <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24 px-2">
                         <h1 className="text-4xl font-bold tracking-tight text-gray-900">New Arrivals</h1>
 
                         <div className="flex items-center">
@@ -226,7 +226,7 @@ export default function Products() {
                         <div className="grid grid-cols-1   lg:grid-cols-5">
                             {/* Filters */}
                             <div>
-                                <div className='flex justify-between items-center opacity-50 py-10'>
+                                <div className='flex justify-between items-center opacity-50 py-10 hidden md:flex'>
                                     <p className=' '> Filters</p>
                                     <FilterAltIcon></FilterAltIcon>
                                 </div>

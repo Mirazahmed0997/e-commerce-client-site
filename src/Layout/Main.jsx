@@ -5,14 +5,16 @@ import Footer from '../Pages/Shared/Footer/Footer';
 import Products from '../Pages/Products/Products/Products';
 import ProductDetails from '../Pages/Products/ProductDetails/ProductDetails';
 import ProductDetailsCarusel from '../Pages/Products/ProductDetailsCarusel/ProductDetailsCarusel';
+import Order from '../Pages/Order/Order/Order';
+import OrderDetails from '../Pages/Order/OrderDetails/OrderDetails';
 
 const Main = () => {
     return (
         <div>
             <Navbar></Navbar>
             <Outlet></Outlet>
-            {/* <ProductDetails></ProductDetails> */}
-            <Footer></Footer>
+            {/* <OrderDetails></OrderDetails> */}
+          <Footer></Footer>
         </div>
     );
 };

@@ -136,7 +136,7 @@ export default function Checkout() {
             </div>
             <div className="mt-6">
                 {activeStep === 1 ? (
-                    <div className="p-4 bg-gray-100 rounded-md shadow-md md:p-6">
+                    <div className="p-4 bg-gray-100 rounded-md shadow-md md:p-6 text-black">
                         <DeliveryAddressForm />
                     </div>
                 ) : (

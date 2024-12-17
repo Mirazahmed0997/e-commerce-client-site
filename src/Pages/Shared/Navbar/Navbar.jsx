@@ -393,6 +393,9 @@ export default function Navbar() {
                                     <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
                                         Create account
                                     </a>
+                                    <Link to='myOrders' className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                                        My Orders
+                                    </Link>
                                 </div>
 
                                 {/* <div className="hidden lg:ml-8 lg:flex">
