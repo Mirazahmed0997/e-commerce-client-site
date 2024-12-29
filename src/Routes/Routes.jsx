@@ -10,6 +10,8 @@ import Cart from "../Pages/Cart/Cart/Cart";
 import Checkout from "../Pages/CheckOut/CheckOut/CheckOut";
 import Order from "../Pages/Order/Order/Order";
 import OrderDetails from "../Pages/Order/OrderDetails/OrderDetails";
+import SignUp from "../Pages/SignUp&LogIn/SignUp/SignUp";
+import Login from "../Pages/SignUp&LogIn/Login/Login";
 
  export const router = createBrowserRouter([
     {
@@ -21,7 +23,7 @@ import OrderDetails from "../Pages/Order/OrderDetails/OrderDetails";
             element:<Home></Home>
         },
         {
-            path:'/:products/:category/:subCategory',
+            path:'/:level1/:level2/:level3',
             element:<Products></Products>
         },
         {
@@ -37,12 +39,20 @@ import OrderDetails from "../Pages/Order/OrderDetails/OrderDetails";
             element:<Checkout></Checkout>
         },
         {
-            path:'/myOrders',
+            path:'/account/myOrders',
             element:<Order></Order>
         },
         {
-            path:'/orderDetails',
+            path:'/account/myOrders/:orderId',
             element:<OrderDetails></OrderDetails>
+        },
+        {
+            path:'/signUp',
+            element:<SignUp></SignUp>
+        },
+        {
+            path:'/signIn',
+            element:<Login></Login>
         },
       ]
     },

@@ -30,13 +30,15 @@ const Cart = () => {
                             >
                                 <Link to='/shop'>Back <span className="sr-only sm:not-sr-only">to shop</span></Link>
                             </button>
-                            <button
-                                type="button"
-                                className="w-full sm:w-auto px-6 py-2 border rounded-md dark:border-violet-600"
-                            >
-                                <Link to='/checkOut'>Continue <span className="sr-only sm:not-sr-only">to Checkout</span></Link>
-                            </button>
-                       
+                            <Link to='/checkOut?step=1'>
+                                <button
+                                    type="button"
+                                    className="w-full sm:w-auto px-6 py-2 border rounded-md dark:border-violet-600"
+                                >
+                                    Continue <span className="sr-only sm:not-sr-only">to Checkout</span>
+                                </button>
+                            </Link>
+
                         </div>
                     </div>
                 </div>

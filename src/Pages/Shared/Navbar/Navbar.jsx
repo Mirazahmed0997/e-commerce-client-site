@@ -192,6 +192,7 @@ export default function Navbar() {
                                     ))}
                                 </TabList>
                             </div>
+
                             <TabPanels as={Fragment}>
                                 {navigation.categories.map((category) => (
                                     <TabPanel key={category.name} className="space-y-10 px-4 pb-8 pt-10">
@@ -251,28 +252,20 @@ export default function Navbar() {
 
                         <div className="space-y-6 border-t border-gray-200 px-4 py-6">
                             <div className="flow-root">
-                                <a href="#" className="-m-2 block p-2 font-medium text-gray-900">
+                                <Link to="/signIn" className="-m-2 block p-2 font-medium text-gray-900">
                                     Sign in
-                                </a>
+                                </Link>
                             </div>
                             <div className="flow-root">
-                                <a href="#" className="-m-2 block p-2 font-medium text-gray-900">
+                                <Link to="signUp" className="-m-2 block p-2 font-medium text-gray-900">
                                     Create account
-                                </a>
+                                </Link>
+                                <Link to='/account/myOrders' className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                                    My Orders
+                                </Link>
                             </div>
                         </div>
 
-                        <div className="border-t border-gray-200 px-4 py-6">
-                            <a href="#" className="-m-2 flex items-center p-2">
-                                <img
-                                    alt=""
-                                    src="https://tailwindui.com/plus/img/flags/flag-canada.svg"
-                                    className="block h-auto w-5 shrink-0"
-                                />
-                                <span className="ml-3 block text-base font-medium text-gray-900">CAD</span>
-                                <span className="sr-only">, change currency</span>
-                            </a>
-                        </div>
                     </DialogPanel>
                 </div>
             </Dialog>
@@ -395,14 +388,14 @@ export default function Navbar() {
 
                             <div className="ml-auto flex items-center">
                                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                                    <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                                    <Link to='/signIn' className="text-sm font-medium text-gray-700 hover:text-gray-800">
                                         Sign in
-                                    </a>
+                                    </Link>
                                     <span aria-hidden="true" className="h-6 w-px bg-gray-200" />
-                                    <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                                    <Link to="/signUp" className="text-sm font-medium text-gray-700 hover:text-gray-800">
                                         Create account
-                                    </a>
-                                    <Link to='/myOrders' className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                                    </Link>
+                                    <Link to='/account/myOrders' className="text-sm font-medium text-gray-700 hover:text-gray-800">
                                         My Orders
                                     </Link>
                                 </div>

@@ -40,7 +40,7 @@ const OrderCard = () => {
 
                 {/* Action Buttons */}
                 <div className="flex space-x-4 mt-4 md:mt-0">
-                    <Link to='/orderDetails'>
+                    <Link to={`/account/myOrders/${5}`}>
                         <button className="px-6 py-3 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none transition-all duration-200">
                             View Details
                         </button></Link>

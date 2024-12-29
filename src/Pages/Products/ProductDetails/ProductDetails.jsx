@@ -6,6 +6,7 @@ import ProductReviewCard from './ProductReviewCard'
 import { womenDress } from '../../Assets/Womens/WomensDress'
 import HomeSectionCard from '../../Home/HomeSectionCard/HomeSectionCard'
 import ProductsCard from '../ProductsCard/ProductsCard'
+import { useNavigate } from 'react-router'
 
 const product = {
     name: 'Basic Tee 6-Pack',
@@ -68,6 +69,13 @@ function classNames(...classes) {
 export default function ProductDetails() {
     const [selectedImage, setSelectedImage] = useState(product.images[0].src) // State to track main image
     const [selectedSize, setSelectedSize] = useState(product.sizes[2])
+    const navigate= useNavigate()
+
+    const handleAddToCart=()=>
+    {
+        navigate('/cart')
+    }
+
 
     return (
         <div className="bg-white mt-32">
@@ -215,7 +223,7 @@ export default function ProductDetails() {
                                 </fieldset>
                             </div>
 
-                            <button
+                            <button onClick={handleAddToCart}
                                 type="submit"
                                 className="mt-6 flex w-full items-center justify-center rounded-md bg-indigo-600 px-4 py-2 text-white text-base font-medium hover:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                             >
