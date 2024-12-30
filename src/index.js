@@ -8,15 +8,15 @@ import {
 import reportWebVitals from './reportWebVitals';
 import { router } from './Routes/Routes';
 import App from './App';
+import { Provider } from 'react-redux';
+import { store } from './State/Store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
-
-    {/* <BrowserRouter>
-    <App></App>
-    </BrowserRouter> */}
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 );
 

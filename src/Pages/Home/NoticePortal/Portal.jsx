@@ -1,4 +1,4 @@
-import { Box, Modal, Typography } from '@mui/material';
+import { Box, Modal } from '@mui/material';
 import React from 'react';
 
 const Portal = ({ handlePortalClose, closePortal }) => {
@@ -7,14 +7,15 @@ const Portal = ({ handlePortalClose, closePortal }) => {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 800,
+    width: '90%', // Use percentage for responsive width
+    maxWidth: '800px', // Set a max width for larger screens
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
-    position: 'relative', // Ensure relative positioning for children
+    borderRadius: '8px', // Optional rounded corners
+    overflow: 'hidden', // Prevent content overflow
   };
-
 
   return (
     <div>
@@ -29,8 +30,8 @@ const Portal = ({ handlePortalClose, closePortal }) => {
             onClick={handlePortalClose}
             style={{
               position: 'absolute',
-              top: '10px',
-              right: '10px',
+              top: '15px',
+              right: '15px',
               background: 'transparent',
               border: 'none',
               fontSize: '1.5rem',
@@ -44,18 +45,10 @@ const Portal = ({ handlePortalClose, closePortal }) => {
           {/* Modal Content */}
           <div className="p-6 py-12 dark:bg-violet-600 dark:text-gray-50">
             <div className="container mx-auto">
-              <div className="flex flex-col lg:flex-row items-center justify-between">
-                <h2 className="text-center text-6xl tracking-tighter font-bold">Under Construction
-                  <br className="sm:hidden" />
+              <div className="flex flex-col items-center lg:flex-row lg:justify-between">
+                <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-center lg:text-left tracking-tighter">
+                  Under Development
                 </h2>
-                {/* <h2 className="text-center text-6xl tracking-tighter font-bold">Up to
-                  <br className="sm:hidden" />50% Off
-                </h2> */}
-                {/* <div className="space-x-2 text-center py-2 lg:py-0">
-                  <span>Plus free shipping! Use code:</span>
-                  <span className="font-bold text-lg">MAMBA</span>
-                </div> */}
-               
               </div>
             </div>
           </div>

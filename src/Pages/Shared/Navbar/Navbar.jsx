@@ -1,7 +1,8 @@
 'use client'
 
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import {
+    Button,
     Dialog,
     DialogBackdrop,
     DialogPanel,
@@ -17,6 +18,9 @@ import {
 } from '@headlessui/react'
 import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link, useNavigate } from 'react-router'
+import { useDispatch, useSelector } from 'react-redux'
+import {  getUser, logout } from '../../../Auth/Action'
+import { store } from '../../../State/Store'
 
 const navigation = {
     categories: [
@@ -144,11 +148,23 @@ const navigation = {
 export default function Navbar() {
     const [open, setOpen] = useState(false)
     const navigate = useNavigate();
+    const { auth } = useSelector(store => store)
+    const disPatch = useDispatch();
+    const jwt = localStorage.getItem('jwt')
 
-    // const handleCategoryClick = (category, section, item, close) => {
-    //     navigate(`/${category.id}/${section.id}/${item.name}`);
-    //     console.log(category, section, item.name)
-    // }
+    useEffect(() => {
+        if (jwt) {
+            disPatch(getUser(jwt))
+        }
+    }, [jwt, auth.jwt])
+
+    useEffect(() => {
+
+    }, [auth.user])
+
+    const handleLogout = () => {
+        disPatch(logout());
+    }
 
 
     return (
@@ -251,18 +267,61 @@ export default function Navbar() {
                         </div>
 
                         <div className="space-y-6 border-t border-gray-200 px-4 py-6">
+
                             <div className="flow-root">
-                                <Link to="/signIn" className="-m-2 block p-2 font-medium text-gray-900">
-                                    Sign in
-                                </Link>
+
+                                {
+                                    auth.user?.firstName ?
+                                        <>
+                                            <Link to='/account/myOrders' className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                                                My Orders
+                                            </Link>
+                                        </>
+                                        :
+                                        <>
+
+                                        </>
+                                }
+                                <br></br>
+                                {
+                                    auth.user?.firstName ?
+                                        <>
+                                            <Button onClick={handleLogout} className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                                                Sign Out
+                                            </Button>
+                                        </>
+                                        :
+                                        <>
+                                            <Link to="/signUp" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                                                Create account
+                                            </Link>
+                                        </>
+                                }
+
+
+
                             </div>
+
                             <div className="flow-root">
-                                <Link to="signUp" className="-m-2 block p-2 font-medium text-gray-900">
-                                    Create account
-                                </Link>
-                                <Link to='/account/myOrders' className="text-sm font-medium text-gray-700 hover:text-gray-800">
-                                    My Orders
-                                </Link>
+                                {
+                                    auth.user?.firstName ?
+                                        <>
+                                            <Link className="text-xl font-medium font-bold text-gray-700 hover:text-gray-800">
+
+                                            </Link>
+                                            <div className="flex flex-col items-center justify-center">
+                                                <div className="flex -space-x-4">
+
+                                                    <span className="flex items-center justify-center w-12 h-12 font-semibold border rounded-full bg-indigo-900 text-white text-xl dark:border-gray-300">{auth.user.firstName[0].toUpperCase()}</span>
+                                                </div>
+                                            </div>
+                                        </> :
+                                        <>
+                                            <Link to="/signIn" className="-m-2 block p-2 font-medium text-gray-900">
+                                                Sign in
+                                            </Link>
+                                        </>
+                                }
                             </div>
                         </div>
 
@@ -388,16 +447,57 @@ export default function Navbar() {
 
                             <div className="ml-auto flex items-center">
                                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                                    <Link to='/signIn' className="text-sm font-medium text-gray-700 hover:text-gray-800">
-                                        Sign in
-                                    </Link>
+                                    {
+                                        auth.user?.firstName ?
+                                            <>
+                                                <Link className="text-xl font-medium font-bold text-gray-700 hover:text-gray-800">
+
+                                                </Link>
+                                                <div className="flex flex-col items-center justify-center">
+                                                    <div className="flex -space-x-4">
+
+                                                        <span className="flex items-center justify-center w-12 h-12 font-semibold border rounded-full bg-indigo-900 text-white text-xl dark:border-gray-300">{auth.user.firstName[0].toUpperCase()}</span>
+                                                    </div>
+                                                </div>
+                                            </>
+                                            :
+                                            <>
+                                                <Link to="/signIn" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                                                    Sign In
+                                                </Link>
+                                            </>
+                                    }
                                     <span aria-hidden="true" className="h-6 w-px bg-gray-200" />
-                                    <Link to="/signUp" className="text-sm font-medium text-gray-700 hover:text-gray-800">
-                                        Create account
-                                    </Link>
-                                    <Link to='/account/myOrders' className="text-sm font-medium text-gray-700 hover:text-gray-800">
-                                        My Orders
-                                    </Link>
+                                    {
+                                        auth.user?.firstName ?
+                                            <>
+                                                <Button onClick={handleLogout} className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                                                    Sign Out
+                                                </Button>
+                                            </>
+                                            :
+                                            <>
+                                                <Link to="/signUp" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                                                    Create account
+                                                </Link>
+                                            </>
+                                    }
+                                    {
+                                        auth.user?.firstName ?
+                                            <>
+                                                <Link to='/account/myOrders' className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                                                    My Orders
+                                                </Link>
+                                            </>
+                                            :
+                                            <>
+
+                                            </>
+                                    }
+
+
+
+
                                 </div>
 
                                 {/* <div className="hidden lg:ml-8 lg:flex">
@@ -431,6 +531,7 @@ export default function Navbar() {
                                         <span className="sr-only">items in cart, view bag</span>
                                     </Link>
                                 </div>
+
                             </div>
                         </div>
                     </div>

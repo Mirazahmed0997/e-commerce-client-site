@@ -1,23 +1,45 @@
-import React, { useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import signUpImg from '../../Assets/download.png'
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import {  getUser, register } from '../../../Auth/Action';
+import { store } from '../../../State/Store';
 
 const SignUp = () => {
     const [showPassword, setShowPassword] = useState(false);
+    const disPatch=useDispatch()
+    const jwt=localStorage.getItem("jwt")
+    const {auth}=useSelector(store=>store)
+
+    const navigate=useNavigate()
+
+    // console.log(jwt)
+
+
+    useEffect(()=>
+        {
+            if(jwt)
+            {
+                disPatch(getUser(jwt))
+            }
+        },[jwt,auth.jwt])
 
     const handleRegisterButton = (event) => {
-        event.preventDefault();
+        event.preventDefault(); // Prevent the default form submission behavior
+    
+        const data = new FormData(event.currentTarget); // Get form data
 
-        const data = new FormData(event.currentTarget);
-        const address = {
-            firstname: data.get('firstName'),
-            lastname: data.get('lastName'),
+        const userData = {
+            firstName: data.get('firstName'),
+            lastName: data.get('lastName'),
             email: data.get('email'),
             contact: data.get('contact'),
             password: data.get('password'),
+        };
 
-        }
-        console.log(address);
+        disPatch(register(userData))
+        navigate("/")
+        console.log(userData); 
     };
 
     return (
@@ -118,7 +140,7 @@ const SignUp = () => {
                                 </div>
                             </div>
                         </div>
-                        <button type="button" className="w-full px-8 py-3 font-semibold rounded-md bg-indigo-500 hover:bg-indigo-700 hover:text-white dark:text-gray-50">Register Now</button>
+                        <button type="submit" className="w-full px-8 py-3 font-semibold rounded-md bg-indigo-500 hover:bg-indigo-700 hover:text-white dark:text-gray-50">Register Now</button>
 
                         <p className="text-sm text-center dark:text-gray-600">
                             Already have an account?

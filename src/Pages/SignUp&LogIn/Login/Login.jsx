@@ -1,20 +1,38 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router';
+// import { store } from '../../../State/Store';
+import { login } from '../../../Auth/Action';
+import { store } from '../../../State/Store';
 
 const Login = () => {
 
     const [showPassword, setShowPassword] = useState(false);
+    const jwt=localStorage.getItem("jwt")
+    const {auth}=useSelector(store=>store)
+    const navigate=useNavigate()
+    const disPatch=useDispatch();
+
+    // useEffect(()=>
+    //     {
+    //         if(jwt)
+    //         {
+    //             disPatch(getUser(jwt))
+    //         }
+    //     },[jwt,auth.jwt])
+
 
     const handleLoginButton = (event) => {
         event.preventDefault();
 
         const data = new FormData(event.currentTarget);
-        const address = {
+        const userData = {
             email: data.get('email'),
             password: data.get('password'),
-
         }
-        console.log(address);
+        disPatch(login(userData))
+        navigate("/")
+        console.log(userData);
     };
 
     return (
@@ -22,7 +40,7 @@ const Login = () => {
             <h2 className="mb-3 text-2xl sm:text-2xl font-semibold text-center ">Sign in to access your account
             </h2>
 
-            <form onClick={handleLoginButton} noValidate className="space-y-6 sm:space-y-8 ">
+            <form onSubmit={handleLoginButton} noValidate className="space-y-6 sm:space-y-8 ">
                 {/* Email Input */}
                 <div className="space-y-4">
 
@@ -93,7 +111,7 @@ const Login = () => {
                         </div>
                     </div>
                 </div>
-                <button type="button" className="w-full px-8 py-3 font-semibold rounded-md bg-indigo-500 hover:bg-indigo-700 hover:text-white dark:text-gray-50">Sign In</button>
+                <button type="submit" className="w-full px-8 py-3 font-semibold rounded-md bg-indigo-500 hover:bg-indigo-700 hover:text-white dark:text-gray-50">Sign In</button>
 
                 <p className="text-sm text-center dark:text-gray-600">
                     Don't have an account?

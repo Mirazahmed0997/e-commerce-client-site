@@ -7,7 +7,7 @@ import { mensJeans } from '../../Assets/Mens/MensJeans';
 import { womenJeans } from '../../Assets/Womens/WomenJeans';
 import HomeHeroSection from '../HomeHeroSection/HomeHeroSection';
 import HomeDescription from '../HomeDescription/HomeDescription';
-import Portal from '../../../NoticePortal/Portal';
+import Portal from '../NoticePortal/Portal';
 
 const Home = () => {
 
