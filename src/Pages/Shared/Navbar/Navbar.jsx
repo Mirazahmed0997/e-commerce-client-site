@@ -19,7 +19,7 @@ import {
 import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link, useNavigate } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
-import {  getUser, logout } from '../../../Auth/Action'
+import { getUser, logout } from '../../../Auth/Action'
 import { store } from '../../../State/Store'
 
 const navigation = {
@@ -55,6 +55,7 @@ const navigation = {
                         { name: 'Jackets', href: '#' },
                         { name: 'Activewear', href: '#' },
                         { name: 'Browse All', href: '#' },
+                        { name: 'Others', href: '#' },
                     ],
                 },
                 {
@@ -67,6 +68,7 @@ const navigation = {
                         { name: 'Sunglasses', href: '#' },
                         { name: 'Hats', href: '#' },
                         { name: 'Belts', href: '#' },
+                        { name: 'Others', href: '#' },
                     ],
                 },
                 {
@@ -112,6 +114,7 @@ const navigation = {
                         { name: 'Jackets', href: '#' },
                         { name: 'Activewear', href: '#' },
                         { name: 'Browse All', href: '#' },
+                        { name: 'Others', href: '#' },
                     ],
                 },
                 {
@@ -124,6 +127,7 @@ const navigation = {
                         { name: 'Sunglasses', href: '#' },
                         { name: 'Hats', href: '#' },
                         { name: 'Belts', href: '#' },
+                        { name: 'Others', href: '#' },
                     ],
                 },
                 {
@@ -256,7 +260,7 @@ export default function Navbar() {
                             </TabPanels>
                         </TabGroup>
 
-                        <div className="space-y-6 border-t border-gray-200 px-4 py-6">
+                        {/* <div className="space-y-6 border-t border-gray-200 px-4 py-6">
                             {navigation.pages.map((page) => (
                                 <div key={page.name} className="flow-root">
                                     <a href={page.href} className="-m-2 block p-2 font-medium text-gray-900">
@@ -264,7 +268,7 @@ export default function Navbar() {
                                     </a>
                                 </div>
                             ))}
-                        </div>
+                        </div> */}
 
                         <div className="space-y-6 border-t border-gray-200 px-4 py-6">
 
@@ -357,7 +361,7 @@ export default function Navbar() {
                                         src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
                                         className="h-8 w-auto"
                                     />
-                                    <Link to='/'><p className='text-2xl font-bold'>China Trade BD</p></Link>
+                                    <Link to='/'><p className='text-xl font-bold'>China Trade BD</p></Link>
                                 </a>
                             </div>
 
@@ -432,7 +436,7 @@ export default function Navbar() {
                                         </Popover>
                                     ))}
 
-                                    {navigation.pages.map((page) => (
+                                    {/* {navigation.pages.map((page) => (
                                         <a
                                             key={page.name}
                                             href={page.href}
@@ -440,14 +444,21 @@ export default function Navbar() {
                                         >
                                             {page.name}
                                         </a>
-                                    ))}
+                                    ))} */}
                                 </div>
 
                             </PopoverGroup>
 
                             <div className="ml-auto flex items-center">
                                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                                    {
+                                    {/* Search */}
+                                    <div className="flex lg:ml-6">
+                                        <a href="#" className="p-2 text-gray-400 hover:text-gray-500">
+                                            <span className="sr-only">Search</span>
+                                            <MagnifyingGlassIcon aria-hidden="true" className="size-6" />
+                                        </a>
+                                    </div>
+                                    {/* {
                                         auth.user?.firstName ?
                                             <>
                                                 <Link className="text-xl font-medium font-bold text-gray-700 hover:text-gray-800">
@@ -466,8 +477,30 @@ export default function Navbar() {
                                                     Sign In
                                                 </Link>
                                             </>
-                                    }
+                                    } */}
                                     <span aria-hidden="true" className="h-6 w-px bg-gray-200" />
+                                    {
+                                        auth.user?.firstName ?
+                                            <div className='px-6'>
+                                                <Link className="text-xl font-medium font-bold text-gray-700 hover:text-gray-800">
+
+                                                </Link>
+                                                <div className="flex flex-col items-center justify-center">
+                                                    <div className="flex -space-x-4">
+
+                                                        <span className="flex items-center justify-center w-12 h-12 font-semibold border rounded-full bg-indigo-900 text-white text-xl dark:border-gray-300">{auth.user.firstName[0].toUpperCase()}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            :
+                                            <>
+                                                <Link to="/signIn" className="text-sm px-6 font-medium text-gray-700 hover:text-gray-800">
+                                                    Sign In
+                                                </Link>
+                                            </>
+                                    }
+
+
                                     {
                                         auth.user?.firstName ?
                                             <>
@@ -494,30 +527,6 @@ export default function Navbar() {
 
                                             </>
                                     }
-
-
-
-
-                                </div>
-
-                                {/* <div className="hidden lg:ml-8 lg:flex">
-                                    <a href="#" className="flex items-center text-gray-700 hover:text-gray-800">
-                                        <img
-                                            alt=""
-                                            src="https://tailwindui.com/plus/img/flags/flag-canada.svg"
-                                            className="block h-auto w-5 shrink-0"
-                                        />
-                                        <span className="ml-3 block text-sm font-medium">CAD</span>
-                                        <span className="sr-only">, change currency</span>
-                                    </a>
-                                </div> */}
-
-                                {/* Search */}
-                                <div className="flex lg:ml-6">
-                                    <a href="#" className="p-2 text-gray-400 hover:text-gray-500">
-                                        <span className="sr-only">Search</span>
-                                        <MagnifyingGlassIcon aria-hidden="true" className="size-6" />
-                                    </a>
                                 </div>
 
                                 {/* Cart */}
@@ -531,6 +540,10 @@ export default function Navbar() {
                                         <span className="sr-only">items in cart, view bag</span>
                                     </Link>
                                 </div>
+
+
+
+
 
                             </div>
                         </div>

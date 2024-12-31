@@ -30,8 +30,8 @@ export const color = [
           { "value": "S", "label": "S" },
           { "value": "M", "label": "M" },
           { "value": "L", "label": "L" },
-          { "value": "L", "label": "XL" },
-          { "value": "L", "label": "XXL" }
+          { "value": "XL", "label": "XL" },
+          { "value": "XXL", "label": "XXL" }
         ]
       }
   ];
