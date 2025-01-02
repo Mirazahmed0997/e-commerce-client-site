@@ -2,7 +2,6 @@ import { GET_USER_FAILURE, GET_USER_REQUEST, GET_USER_SUCCESS, LOGIN_FAILURE, LO
 
 import {axiosPublic} from '../../src/Pages/Hooks/useAxiosPublic'
 
-// const token = localStorage.getItem("jwt")
 
 
 
@@ -12,7 +11,7 @@ const registerFailure = (error) => ({ type: REGISTER_FAILURE, payload: error })
 
 
 
-export const register = (userData,navigate) => async (dispatch) => {
+export const register = (userData) => async (dispatch) => {
     
 
     // console.log(userData)
@@ -48,7 +47,7 @@ export const login = (userData) => async (dispatch) => {
         if (user.jwt) {
             localStorage.setItem("jwt", user.jwt)
         }
-        console.log("user", user)
+        console.log("jwt", user.jwt)
         dispatch(loginSuccess(user.login))
     } catch (error) {
         dispatch(loginFailure(error.message))
@@ -71,6 +70,7 @@ export const getUser = (jwt) => async (dispatch) => {
             }
         })
         const user = response.data;
+        // console.log(user)
         dispatch(getUserSuccess(user))
     } catch (error) {
         dispatch(getUserFailure(error.message))

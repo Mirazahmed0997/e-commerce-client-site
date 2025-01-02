@@ -174,7 +174,7 @@ export default function Navbar() {
     return (
         <div className="fixed top-0 left-0 w-full z-50 bg-white shadow-lg  ">
             {/* Mobile menu */}
-            <Dialog open={open} onClose={setOpen} className="relative z-40 lg:hidden">
+            <Dialog open={open} onClose={setOpen} className="relative z-40  lg:hidden">
                 <DialogBackdrop
                     transition
                     className="fixed inset-0 bg-black/25 transition-opacity duration-300 ease-linear data-[closed]:opacity-0"
@@ -215,7 +215,7 @@ export default function Navbar() {
 
                             <TabPanels as={Fragment}>
                                 {navigation.categories.map((category) => (
-                                    <TabPanel key={category.name} className="space-y-10 px-4 pb-8 pt-10">
+                                    <TabPanel key={category.name} className="space-y-10 px-4 pb-8 pt-10 ">
                                         <div className="grid grid-cols-2 gap-x-4">
                                             {category.featured.map((item) => (
                                                 <div key={item.name} className="group relative text-sm">
@@ -540,11 +540,6 @@ export default function Navbar() {
                                         <span className="sr-only">items in cart, view bag</span>
                                     </Link>
                                 </div>
-
-
-
-
-
                             </div>
                         </div>
                     </div>

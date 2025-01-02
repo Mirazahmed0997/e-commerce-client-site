@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
     Dialog,
     DialogBackdrop,
@@ -20,8 +20,11 @@ import ProductsCard from '../ProductsCard/ProductsCard'
 import { filters, singleFilter } from './FilterData'
 import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material'
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import { Link, Navigate, useNavigate } from 'react-router'
+import { Link, Navigate, useNavigate, useParams } from 'react-router'
 import { useLocation } from 'react-router'
+import { useDispatch, useSelector } from 'react-redux'
+import { findProducts } from '../../../State/Products/Action'
+import { store } from '../../../State/Store'
 
 const sortOptions = [
     // { name: 'Most Popular', href: '#', current: true },
@@ -41,6 +44,26 @@ export default function Products() {
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
     const location = useLocation()
     const navigate = useNavigate()
+    const param = useParams()
+    const disPatch=useDispatch()
+    const {AllProducts}=useSelector(store=>store)
+
+    console.log(AllProducts)
+
+    const decodedQueryString = decodeURIComponent(location.search)
+    const searchParams = new URLSearchParams(decodedQueryString)
+
+    const colorValue = searchParams.get("color")
+    const sizeValue = searchParams.get("size")
+    const priceValue = searchParams.get("price")
+    const discount = searchParams.get("discount")
+    const sortValue = searchParams.get("sort")
+    const pageNumber = searchParams.get("page")
+    const stock = searchParams.get("stock")
+
+    console.log(discount)
+
+    // console.log(sizeValue,colorValue,priceValue,discount,sortValue,stock)
 
     const handleFilter = (value, sectionId) => {
         const searchParams = new URLSearchParams(location.search); // Get search params from the URL
@@ -69,6 +92,31 @@ export default function Products() {
         // Navigate with updated query string
         navigate({ search: `?${query}` });
     }
+
+    useEffect(() => {
+        const [minPrice, maxPrice] = priceValue === null? [0,100000]
+            : priceValue.split("-").map(Number);
+
+            console.log(minPrice,maxPrice)
+
+        const data = {
+            category: param.levelThree,
+            color: colorValue || [],
+            sizes: sizeValue || [],
+            minPrice,
+            maxPrice,
+            minDiscount: discount || 0,
+            sort: sortValue || "price_low",
+            pageNumber: pageNumber - 1,
+            pageSize: 10,
+            stock: stock,
+        };
+
+        disPatch(findProducts(data))
+
+        console.log(data)
+
+    }, [param.levelThree,colorValue, sizeValue, priceValue, discount, sortValue, stock])
 
 
     return (
@@ -350,7 +398,7 @@ export default function Products() {
                                         </Disclosure>
                                     ))}
 
-                                  
+
                                 </form>
                             </div>
 
@@ -361,7 +409,7 @@ export default function Products() {
 
                                 <div className='grid grid-cols-1 md:grid-cols-3 bg-white'>
                                     {
-                                        womenDress.map((item) => <ProductsCard Products={item}></ProductsCard>)
+                                        AllProducts.products?.content?.map((item) => <ProductsCard Products={item}></ProductsCard>)
                                     }
                                 </div>
 

@@ -13,6 +13,8 @@ const Login = () => {
     const navigate=useNavigate()
     const disPatch=useDispatch();
 
+    console.log(jwt)
+
     // useEffect(()=>
     //     {
     //         if(jwt)
@@ -32,7 +34,7 @@ const Login = () => {
         }
         disPatch(login(userData))
         navigate("/")
-        console.log(userData);
+        // console.log(userData);
     };
 
     return (

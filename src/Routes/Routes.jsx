@@ -23,12 +23,12 @@ import Login from "../Pages/SignUp&LogIn/Login/Login";
             element:<Home></Home>
         },
         {
-            path:'/:level1/:level2/:level3',
+            path:'/:levelOne/:levelTwo/:levelThree',
             element:<Products></Products>
         },
         {
             path:'/productDetails/:productId',
-            element:<ProductDetails></ProductDetails>
+            element:<ProductDetails></ProductDetails>,
         },
         {
             path:'/cart',
