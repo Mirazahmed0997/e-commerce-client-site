@@ -79,7 +79,7 @@ export default function Checkout() {
                                 }}
                             >
                                 <Box sx={{ flex: '1 1 auto' }} />
-                                <Button
+                                {/* <Button
                                     onClick={handleReset}
                                     sx={{
                                         width: { xs: '100%', sm: 'auto' },
@@ -87,7 +87,7 @@ export default function Checkout() {
                                     }}
                                 >
                                     Reset
-                                </Button>
+                                </Button> */}
                             </Box>
                         </React.Fragment>
                     ) : (
@@ -108,7 +108,7 @@ export default function Checkout() {
                                     pt: 2,
                                 }}
                             >
-                                <Button
+                                {/* <Button
                                     color="inherit"
                                     disabled={activeStep === 0}
                                     onClick={handleBack}
@@ -119,16 +119,16 @@ export default function Checkout() {
                                     }}
                                 >
                                     Back
-                                </Button>
+                                </Button> */}
                                 <Box sx={{ flex: '1 1 auto' }} />
-                                <Button
+                                {/* <Button
                                     onClick={handleNext}
                                     sx={{
                                         width: { xs: '100%', sm: 'auto' },
                                     }}
                                 >
                                     {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                                </Button>
+                                </Button> */}
                             </Box>
                         </React.Fragment>
                     )}

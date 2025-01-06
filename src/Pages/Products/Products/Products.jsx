@@ -25,6 +25,8 @@ import { useLocation } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 import { findProducts } from '../../../State/Products/Action'
 import { store } from '../../../State/Store'
+import Pagination from '@mui/material/Pagination';
+
 
 const sortOptions = [
     // { name: 'Most Popular', href: '#', current: true },
@@ -45,10 +47,10 @@ export default function Products() {
     const location = useLocation()
     const navigate = useNavigate()
     const param = useParams()
-    const disPatch=useDispatch()
-    const {AllProducts}=useSelector(store=>store)
+    const disPatch = useDispatch()
+    const { AllProducts } = useSelector(store => store)
 
-    console.log(AllProducts)
+    // console.log(AllProducts)
 
     const decodedQueryString = decodeURIComponent(location.search)
     const searchParams = new URLSearchParams(decodedQueryString)
@@ -61,9 +63,18 @@ export default function Products() {
     const pageNumber = searchParams.get("page")
     const stock = searchParams.get("stock")
 
-    console.log(discount)
 
     // console.log(sizeValue,colorValue,priceValue,discount,sortValue,stock)
+
+    const handlePaginatiochange=(event,value)=>
+    {
+        const searchParams=new URLSearchParams(location.search)
+        // console.log("param",searchParams)
+        searchParams.set("page",value)
+        const query= searchParams.toString();
+        console.log(searchParams,value)
+        navigate({ search:`?${query}`});
+    }
 
     const handleFilter = (value, sectionId) => {
         const searchParams = new URLSearchParams(location.search); // Get search params from the URL
@@ -71,7 +82,7 @@ export default function Products() {
 
         // Check if the sectionId exists in searchParams
         let filterValue = searchParams.get(sectionId) ? searchParams.get(sectionId).split(",") : [];
-        console.log(filterValue);
+        // console.log(filterValue);
 
         // Logic to add/remove filter value
         if (filterValue.includes(value)) {
@@ -90,14 +101,13 @@ export default function Products() {
         console.log("Updated Query:", query);
 
         // Navigate with updated query string
-        navigate({ search: `?${query}` });
+        navigate({ search:`?${query}`});
     }
 
     useEffect(() => {
-        const [minPrice, maxPrice] = priceValue === null? [0,100000]
+        const [minPrice, maxPrice] = priceValue === null ? [0, 100000]
             : priceValue.split("-").map(Number);
 
-            console.log(minPrice,maxPrice)
 
         const data = {
             category: param.levelThree,
@@ -107,16 +117,19 @@ export default function Products() {
             maxPrice,
             minDiscount: discount || 0,
             sort: sortValue || "price_low",
-            pageNumber: pageNumber - 1,
+            pageNumber,
             pageSize: 10,
             stock: stock,
         };
 
+        // console.log(data)
+
+
         disPatch(findProducts(data))
 
-        console.log(data)
+        // console.log(data)
 
-    }, [param.levelThree,colorValue, sizeValue, priceValue, discount, sortValue, stock])
+    }, [param.levelThree, colorValue, sizeValue,discount, priceValue, sortValue, stock,pageNumber])
 
 
     return (
@@ -416,6 +429,12 @@ export default function Products() {
                             </div>
                         </div>
                     </section>
+                    <section className='w-full px-[3.6rem]'>
+                        <div className='px-4 py-5 flex justify-center'>
+                            <Pagination count={AllProducts.products?.totalPages} color="secondary"onChange={handlePaginatiochange}/>
+                        </div>
+                    </section>
+
                 </main>
             </div>
         </div>

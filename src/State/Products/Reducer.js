@@ -2,7 +2,7 @@ import { FIND_PRODUCT_BY_ID_FAILURE, FIND_PRODUCT_BY_ID_REQUEST, FIND_PRODUCT_BY
 
 const initialState={
     products:[],
-    product:null,
+    singleProduct:null,
     loading:false,
     error:null
 }
@@ -20,7 +20,7 @@ export const customerProductReducer=(state=initialState,action)=>
             return { ...state, loading: false, error: null,products:action.payload}
 
         case FIND_PRODUCT_BY_ID_SUCCESS:
-            return { ...state, loading: false, error: null,product:action.payload}
+            return { ...state, loading: false, error: null,singleProduct:action.payload}
 
 
         case FIND_PRODUCTS_FAILURE:

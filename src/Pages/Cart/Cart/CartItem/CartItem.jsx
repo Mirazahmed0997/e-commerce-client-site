@@ -2,7 +2,49 @@ import { IconButton } from '@mui/material';
 import React from 'react';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-const CartItem = () => {
+import { useDispatch } from 'react-redux';
+import { removeCartItem, updateCartItem } from '../../../../State/Cart/Action';
+import Swal from 'sweetalert2';
+const CartItem = ({ item }) => {
+
+    const disPatch = useDispatch();
+    console.log("item", item)
+    const handleUpdateCart = (num) => {
+        console.log("clicked", num)
+        const data = {
+            data: { data: { quantity: item.quantity + num } }, // Ensure this matches the reducer's expected structure
+            CartItemId: item?._id
+        };
+        // console.log("clicked data",data)
+
+        disPatch(updateCartItem(data));
+    }
+
+    const handleRemoveCartItem = () => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success"
+              });
+              disPatch(removeCartItem(item._id))
+            }
+            
+          });
+          
+       
+    }
+
+
     return (
         <div>
             <div className="flex flex-col max-w-3xl p-12 space-y-4 sm:p-10 mx-auto dark:bg-gray-50 dark:text-gray-800 shadow-lg">
@@ -11,34 +53,40 @@ const CartItem = () => {
                         <div className="flex flex-col sm:flex-row w-full space-y-4 sm:space-y-0 sm:space-x-4">
                             <img
                                 className="flex-shrink-0 object-cover w-full h-40 sm:w-32 sm:h-32 rounded dark:bg-gray-500"
-                                src="https://rukminim1.flixcart.com/image/612/612/xif0q/dress/a/x/z/l-na-awd-19-yellow-aarvia-original-imagzffm3bkyzup2.jpeg?q=70"
+                                src={item.product.imageUrl}
                                 alt="Polaroid camera"
                             />
                             <div className="flex flex-col justify-between w-full pb-4">
                                 <div className="flex justify-between w-full pb-2 space-x-2">
                                     <div className="space-y-1">
-                                        <h3 className="text-lg font-semibold leading-snug sm:pr-8">Women Bodycon Yellow Dress</h3>
-                                        <p className="text-sm dark:text-gray-600 opacity-50">Size: L, Color:  Yellow</p>
-                                        <p className="text-sm dark:text-gray-600 opacity-50">Seller: Miraz Ahmed </p>
-                                       
+                                        <h3 className="text-lg font-semibold leading-snug sm:pr-8">{item.product?.title}</h3>
+                                        <p className="text-sm dark:text-gray-600 opacity-50">Size: {item?.size}, Color:  {item.product?.color}</p>
+                                        <p className="text-sm dark:text-gray-600 opacity-50">{item.product.brand}</p>
+
                                     </div>
                                     <div className="text-right">
-                                        <p className="text-lg font-semibold">59.99/-</p>
-                                        <p className="text-sm line-through dark:text-gray-400">75.50/-</p>
-                                        <p className="text-lg font-semibold">15%</p>
+
+
+                                        <> <p className="text-lg font-semibold">Total Price: {item?.price}/-</p></>
+
+                                        {/* <p className="text-sm dark:text-gray-600">Total Discount : {item?.discountedPrice} tk</p> */}
+                                        <p className="text-sm dark:text-gray-600 line-through">{item?.product?.discountedPersent}% off</p>
+                                        {/* <p className="text-lg font-semibold">Discount: {item?.discountedPrice}</p>
+                                        <p className="text-lg font-semibold">Discount: {item?.product?.discountedPersent}%</p> */}
                                     </div>
                                 </div>
                                 <div className="flex text-sm divide-x">
 
-                                    <IconButton>
-                                            <RemoveCircleIcon></RemoveCircleIcon>
+                                    <IconButton onClick={() => handleUpdateCart(-1)} disabled={item.quantity <= 1}>
+                                        <RemoveCircleIcon />
                                     </IconButton>
-                                    <span className='py-1 px-7 border rounded-sm font-semibold'>5</span>
-                                    <IconButton>
-                                           <AddCircleIcon></AddCircleIcon> <br />
+                                    <span className="py-1 px-7 border rounded-sm font-semibold">{item.quantity}</span>
+                                    <IconButton onClick={() => handleUpdateCart(1)}>
+                                        <AddCircleIcon />
                                     </IconButton>
-                                        
-                                    <button
+
+
+                                    <button onClick={handleRemoveCartItem}
                                         type="button"
                                         className="flex items-center px-2 py-1 space-x-1 sm:space-x-2"
                                     >
@@ -66,7 +114,7 @@ const CartItem = () => {
                     </li>
 
                 </ul>
-                
+
             </div>
 
         </div>

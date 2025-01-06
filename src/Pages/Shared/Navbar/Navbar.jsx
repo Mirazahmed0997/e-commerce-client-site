@@ -21,6 +21,7 @@ import { Link, useNavigate } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUser, logout } from '../../../Auth/Action'
 import { store } from '../../../State/Store'
+import { getCart } from '../../../State/Cart/Action'
 
 const navigation = {
     categories: [
@@ -155,6 +156,9 @@ export default function Navbar() {
     const { auth } = useSelector(store => store)
     const disPatch = useDispatch();
     const jwt = localStorage.getItem('jwt')
+    const {cartItems}=useSelector(store=>store.cart)
+
+    console.log(cartItems)
 
     useEffect(() => {
         if (jwt) {
@@ -168,7 +172,15 @@ export default function Navbar() {
 
     const handleLogout = () => {
         disPatch(logout());
+        navigate('/signIn')
     }
+
+    useEffect(()=>
+        {
+            if (auth.user) {
+                disPatch(getCart());
+            }
+        },[auth.user,disPatch])
 
 
     return (
@@ -536,7 +548,7 @@ export default function Navbar() {
                                             aria-hidden="true"
                                             className="size-6 shrink-0 text-gray-400 group-hover:text-gray-500"
                                         />
-                                        <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">4</span>
+                                        <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800"> {cartItems?.length || 0}</span>
                                         <span className="sr-only">items in cart, view bag</span>
                                     </Link>
                                 </div>

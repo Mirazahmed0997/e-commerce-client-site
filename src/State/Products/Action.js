@@ -21,11 +21,13 @@ export const findProducts = (reqData) =>async (disPatch) => {
 
     const { category, color, sizes, minPrice, maxPrice, minDiscount, sort, stock,pageNumber, pageSize } = reqData
 
+    console.log("action req data", reqData)
+
 
     try {
         // const {data}=await useAxios.get(`api/products?&pageNumber=${pageNumber}`)
         
-        const {data}=await useAxios.get(`api/products?category=${category}&color=${color}&size=${sizes}&minPrice=${minPrice}&stock=${stock}&pageSize=${pageSize}&sort=${sort}&maxPrice=${maxPrice}`)
+        const {data}=await useAxios.get(`api/products?category=${category}&color=${color}&size=${sizes}&minPrice=${minPrice}&stock=${stock}&pageSize=${pageSize}&sort=${sort}&maxPrice=${maxPrice}&pageNumber=${pageNumber}&minDiscount=${minDiscount}`)
 
         console.log("product data",data)
         disPatch({type:FIND_PRODUCTS_SUCCESS,payload:data})
@@ -43,10 +45,13 @@ export const findProductsById = (reqData) =>async (disPatch) => {
     disPatch({type:FIND_PRODUCT_BY_ID_REQUEST})
     const {productId} = reqData
 
+
     try {
         const {data}=await axiosPublic.get(`api/products/id/${productId}`)
 
         disPatch({type:FIND_PRODUCT_BY_ID_SUCCESS,payload:data})
+        // console.log("product :",data)
+
 
 
     } catch (error) {

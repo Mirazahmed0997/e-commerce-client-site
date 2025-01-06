@@ -1,26 +1,36 @@
 import { Box, Grid, Grid2, TextField } from '@mui/material';
 import React from 'react';
 import AddressCart from '../AddressCart/AddressCart';
+import { useDispatch } from 'react-redux';
+import { createOrder } from '../../../State/Order/Action';
+import { useNavigate } from 'react-router';
 
 const DeliveryAddressForm = () => {
 
+    const disPatch = useDispatch()
+    const navigate = useNavigate()
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        // const form=event.target;
-        // const firstName=form.firstname.value
+       
         const data = new FormData(event.currentTarget);
         const address = {
-            firstname: data.get('firstname'),
-            lastname: data.get('lastname'),
+            firstName: data.get('firstname'),
+            lastName: data.get('lastname'),
             email: data.get('email'),
-            contact: data.get('contact'),
-            address: data.get('address'),
+            mobile: data.get('contact'),
+            streetAddress: data.get('address'),
             city: data.get('city'),
             state: data.get('state'),
-            zip: data.get('zip')
+            zipCode: data.get('zip')
         }
         console.log(address)
+        const orderData = { address, navigate }
+        disPatch(createOrder(orderData))
+        console.log(orderData)
     }
+
+
 
     return (
         <div>
@@ -63,7 +73,7 @@ const DeliveryAddressForm = () => {
                                         {/* First Name */}
                                         <div className="col-span-full sm:col-span-3">
                                             <label htmlFor="firstname" className="text-sm font-medium text-gray-800 dark:text-gray-200">
-                                                First Name*
+                                                First Name<span className='text-red-900 font-bold'>*</span>
                                             </label>
                                             <input
                                                 id="firstname"
@@ -78,7 +88,7 @@ const DeliveryAddressForm = () => {
                                         {/* Last Name */}
                                         <div className="col-span-full sm:col-span-3">
                                             <label htmlFor="lastname" className="text-sm font-medium text-gray-800 dark:text-gray-200">
-                                                Last Name*
+                                                Last Name<span className='text-red-900 font-bold'>*</span>
                                             </label>
                                             <input
                                                 id="lastname"
@@ -107,12 +117,12 @@ const DeliveryAddressForm = () => {
                                         {/* Phone Number */}
                                         <div className="col-span-full sm:col-span-3">
                                             <label htmlFor="contact" className="text-sm font-medium text-gray-800 dark:text-gray-200">
-                                                Contact*
+                                                Contact<span className='text-red-900 font-bold'>*</span>
                                             </label>
                                             <input
                                                 id="contact"
                                                 name="contact"
-                                                type="text"
+                                                type="number"
                                                 placeholder="Enter your phone number"
                                                 required
                                                 className="w-full px-4 py-3 mt-1 rounded-md border border-gray-300 text-gray-900 dark:text-white dark:bg-gray-800 focus:ring-2 focus:ring-indigo-500"
@@ -122,7 +132,7 @@ const DeliveryAddressForm = () => {
                                         {/* Address */}
                                         <div className="col-span-full">
                                             <label htmlFor="address" className="text-sm font-medium text-gray-800 dark:text-gray-200">
-                                                Address*
+                                                Address<span className='text-red-900 font-bold'>*</span>
                                             </label>
                                             <TextField
                                                 id="address"
@@ -139,7 +149,7 @@ const DeliveryAddressForm = () => {
                                         {/* City */}
                                         <div className="col-span-full sm:col-span-2">
                                             <label htmlFor="city" className="text-sm font-medium text-gray-800 dark:text-gray-200">
-                                                City*
+                                                City<span className='text-red-900 font-bold'>*</span>
                                             </label>
                                             <input
                                                 id="city"
@@ -173,7 +183,7 @@ const DeliveryAddressForm = () => {
                                             <input
                                                 id="zip"
                                                 name="zip"
-                                                type="text"
+                                                type="number"
                                                 placeholder="Enter ZIP code"
                                                 className="w-full px-4 py-3 mt-1 rounded-md border border-gray-300 text-gray-900 dark:text-white dark:bg-gray-800 focus:ring-2 focus:ring-indigo-500"
                                             />

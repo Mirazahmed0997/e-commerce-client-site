@@ -14,10 +14,10 @@ const ProductsCard = ({ Products }) => {
 
     // Example usage
 
-    const sellPrice=Products.sellPrice
+    const sellPrice = Products.sellPrice
     const discountedPercent = Products.discountedPersent;
     const calDiscountedPrice = calculateDiscountedPrice(sellPrice, discountedPercent);
-    console.log(`The discounted price is: $${calDiscountedPrice}`);
+    // console.log(`The discounted price is: $${calDiscountedPrice}`);
 
 
     return (
@@ -45,31 +45,46 @@ const ProductsCard = ({ Products }) => {
                     </p>
                     <div className="flex items-center gap-2 mt-2 text-gray-800">
 
+
+                        <span className="font-bold text-base sm:text-lg">
+                            {Products.discountedPrice}/-
+                        </span>
+                        <span className="line-through opacity-50 font-medium text-sm">
+                            {Products.sellPrice}/=
+                        </span>
+                        <span className="text-green-600 font-semibold text-sm">
+                            {Products.discountedPersent}% off
+                        </span>
+
+
+                    </div>
+                    {/* <div className="flex items-center gap-2 mt-2 text-gray-800">
+
                         {
                             Products.discountedPersent > 0 ? (
                                 <span className="font-bold text-base sm:text-lg">
-                                    {calDiscountedPrice}/-
+                                    {Products.sellPrice}/-
                                 </span>
                             ) : (
                                 <span className="font-bold text-base sm:text-lg">
-                                    {Products.sellPrice}/-
+                                    {Products.discountedPrice}/-
                                 </span>
                             )
                         }
 
                         {Products.discountedPrice && Products.discountedPrice > 0 && (
                             <span className="line-through opacity-50 font-medium text-sm">
-                                {calDiscountedamount}/=
+                                {Products.discountedPrice}/=
                             </span>
                         )}
                         {Products.discountedPersent && Products.discountedPersent > 0 && (
                             <span className="text-green-600 font-semibold text-sm">
-                                {discountedPercent}% off
+                                {Products.discountedPersent}% off
                             </span>
                         )}
 
 
-                    </div>
+                    </div> */}
                 </div>
 
                 {/* Buy Now Button */}

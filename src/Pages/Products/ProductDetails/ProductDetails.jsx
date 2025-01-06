@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { StarIcon } from '@heroicons/react/20/solid'
 import { Radio, RadioGroup } from '@headlessui/react'
 import { Box, Grid, Grid2, LinearProgress, Rating } from '@mui/material'
@@ -6,7 +6,12 @@ import ProductReviewCard from './ProductReviewCard'
 import { womenDress } from '../../Assets/Womens/WomensDress'
 import HomeSectionCard from '../../Home/HomeSectionCard/HomeSectionCard'
 import ProductsCard from '../ProductsCard/ProductsCard'
-import { useNavigate } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
+import { useDispatch, useSelector } from 'react-redux'
+import { findProductsById } from '../../../State/Products/Action'
+import { store } from '../../../State/Store'
+import { addItemToCart } from '../../../State/Cart/Action'
+import Swal from 'sweetalert2'
 
 const product = {
     name: 'Basic Tee 6-Pack',
@@ -67,17 +72,51 @@ function classNames(...classes) {
 }
 
 export default function ProductDetails() {
-    const [selectedImage, setSelectedImage] = useState(product.images[0].src) // State to track main image
-    const [selectedSize, setSelectedSize] = useState(product.sizes[2])
-    const navigate= useNavigate()
 
-    const handleAddToCart=()=>
-    {
-        navigate('/cart')
-    }
+
+
+    const [selectedImage, setSelectedImage] = useState("") // State to track main image
+    const navigate = useNavigate()
+    const params = useParams()
+    const disPatch = useDispatch();
+    const { singleProduct } = useSelector(store => store.AllProducts)
+    const [selectedSize, setSelectedSize] = useState(null);
+
+
+    useEffect(() => {
+        const productId = params.productId;
+        disPatch(findProductsById({ productId })); // Fetch product details
+    }, [params.productId]);
+
+    // Ensure there is a default image selected on load
+    useEffect(() => {
+        if (singleProduct?.imageUrl) {
+            setSelectedImage(singleProduct?.imageUrl); // Default to first product image
+        }
+    }, [singleProduct]);
+
+    const handleAddToCart = (event) => {
+        if (!selectedSize) {
+            event.preventDefault()
+            Swal.fire("Select a Size!");
+            return;
+        }
+        event.preventDefault()
+        const data = { productId: params.productId, size: selectedSize.name };
+        disPatch(addItemToCart(data));
+        Swal.fire({
+            title: `${singleProduct?.title} Successfully Added To the Cart!`,
+            icon: "success",
+            draggable: true
+          });
+        navigate('/cart');
+    };
 
 
     return (
+        // <div>
+
+        // </div>
         <div className="bg-white mt-32">
             <div className="pt-6">
                 <nav aria-label="Breadcrumb">
@@ -123,14 +162,14 @@ export default function ProductDetails() {
                         <div className="overflow-hidden rounded-lg w-full max-w-[30rem] max-h-[35rem]">
                             <img
                                 alt="Selected product"
-                                src={selectedImage}
+                                src={selectedImage} // Display the selected image as large image
                                 className="w-full h-full object-cover"
                             />
                         </div>
 
                         {/* Thumbnail Images */}
                         <div className="flex flex-wrap justify-center space-x-4 mt-4">
-                            {product.images.map((image) => (
+                            {product?.images?.map((image) => (
                                 <div
                                     key={image.src}
                                     className={classNames(
@@ -139,7 +178,7 @@ export default function ProductDetails() {
                                             ? 'border-indigo-600'
                                             : 'border-gray-200'
                                     )}
-                                    onClick={() => setSelectedImage(image.src)} // Change main image
+                                    onClick={() => setSelectedImage(image.src)} // Change main image on click
                                 >
                                     <img
                                         alt={image.alt}
@@ -151,23 +190,29 @@ export default function ProductDetails() {
                         </div>
                     </div>
 
+
                     {/* Product info */}
                     <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:max-w-7xl lg:px-8">
                         <div className="">
                             <h1 className="text-lg font-semibold text-gray-400 sm:text-xl">
-                                {product.name}
+                                {singleProduct?.title} ({singleProduct?.color})
                             </h1>
                             <h2 className="text-lg text-gray-900 opacity-60 pt-1 sm:text-xl">
-                                {product.name}
+                                {singleProduct?.brand}
                             </h2>
                         </div>
 
                         {/* Pricing and reviews */}
                         <div className="mt-4">
                             <div className="flex items-center space-x-4 text-lg text-gray-900">
-                                <p className="font-semibold">699/-</p>
-                                <p className="opacity-50 line-through">1999/=</p>
-                                <p className="text-green-600 font-semibold">65% off</p>
+
+                                <>
+                                    <p className="font-semibold">{singleProduct?.sellPrice}/-</p>
+                                    <p className="opacity-50 line-through">{singleProduct?.discountedPrice}/= </p>
+                                    <p className="text-green-600 font-semibold">{singleProduct?.discountedPersent}% off</p>
+                                </>
+
+
                             </div>
 
                             <div className="mt-6 flex items-center space-x-4">
@@ -189,24 +234,24 @@ export default function ProductDetails() {
 
                                 <fieldset aria-label="Choose a size" className="mt-4">
                                     <RadioGroup
-                                        value={selectedSize}
-                                        onChange={setSelectedSize}
+                                        value={selectedSize} // Bind the state
+                                        onChange={(size) => setSelectedSize(size)} // Update state when the selection changes
                                         className="grid grid-cols-4 gap-2 sm:grid-cols-8 lg:grid-cols-4"
                                     >
-                                        {product.sizes.map((size) => (
+                                        {singleProduct?.sizes?.map((size) => (
                                             <Radio
                                                 key={size.name}
-                                                value={size}
-                                                disabled={!size.inStock}
+                                                value={size} // Pass the entire size object
+                                                disabled={!size.sizeQuantity} // Disable if size is unavailable
                                                 className={classNames(
-                                                    size.inStock
+                                                    size.sizeQuantity
                                                         ? "cursor-pointer bg-white text-gray-900 shadow-sm"
                                                         : "cursor-not-allowed bg-gray-50 text-gray-200",
                                                     "group relative flex items-center justify-center rounded-md border px-4 py-2 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                                                 )}
                                             >
-                                                <span>{size.name}</span>
-                                                {size.inStock ? (
+                                                <span className="text-black">{size.name}</span>
+                                                {size.sizeQuantity ? (
                                                     <span
                                                         aria-hidden="true"
                                                         className="pointer-events-none absolute -inset-px rounded-md border-2 border-transparent group-focus:border-indigo-500 group-checked:border-indigo-500"
@@ -220,6 +265,7 @@ export default function ProductDetails() {
                                             </Radio>
                                         ))}
                                     </RadioGroup>
+
                                 </fieldset>
                             </div>
 
@@ -243,7 +289,7 @@ export default function ProductDetails() {
                             </ul>
 
                             <h3 className="text-sm font-medium text-gray-900 mt-6">Details</h3>
-                            <p className="text-sm text-gray-600 mt-2">{product.details}</p>
+                            <p className="text-sm text-gray-600 mt-2">{singleProduct?.description}</p>
                         </div>
                     </div>
                 </section>
@@ -309,6 +355,5 @@ export default function ProductDetails() {
 
             </div>
         </div>
-
     )
 }

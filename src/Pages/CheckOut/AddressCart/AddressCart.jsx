@@ -1,14 +1,18 @@
 import React from 'react';
 
-const AddressCart = () => {
+const AddressCart = ({address}) => {
     return (
         <div>
             {/* <h1>Delivery Address</h1> */}
             <div className="col-span-full">
-                <p className='font-semibold'>Miraz Ahmed</p>
+                <p className='font-semibold'>{address?.firstName} {address?.lastName}</p>
                 <div className='mt-2'>
-                    <p>Jurain , Medical Road</p>
-                    <p>Contsct: 01533436831</p>
+                    <p>{address?.streetAddress}</p>
+                    <p>{address?.city} {address?.zipCode}</p>
+                    {address?.mobile?
+                        <><p>Contact: 0{address?.mobile}</p></>:
+                        <></>
+                    }
                 </div>
             </div><br />
 

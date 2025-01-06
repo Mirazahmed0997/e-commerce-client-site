@@ -6,10 +6,13 @@ import { CREATE_ORDER_FAILURE, CREATE_ORDER_REQUEST, CREATE_ORDER_SUCCESS, GET_O
 export const createOrder = (reqData) => async (disPatch) => {
     disPatch({ type: CREATE_ORDER_REQUEST })
 
+    console.log("action reqData",reqData.address)
+
     try {
-        const { data } = await axiosPublic.post(`api/orders`, reqData.address)
-        if (data.id) {
-            reqData.navigate({ search: `step=3&order_id=${data.id}` })
+        const { data } = await axiosPublic.post(`api/orders/`, reqData.address)
+        console.log("action data",data)
+        if (data._id) {
+            reqData.navigate({ search: `step=3&order_id=${data._id}` })
         }
         console.log("created Order:", data)
         disPatch({ type: CREATE_ORDER_SUCCESS, payload: data })

@@ -8,6 +8,7 @@ export const getCart = () =>async (disPatch) => {
     try {
         const { data } = await axiosPublic.get('api/cart')
         disPatch({ type: GET_CART_SUCCESS, payload: data })
+        // console.log("cart data",data)
     } catch (error) {
         disPatch({ type: GET_CART_FAILURE, payload: error.message })
     }
@@ -17,22 +18,24 @@ export const getCart = () =>async (disPatch) => {
 
 export const addItemToCart = (reqData) =>async (disPatch) => {
     disPatch({ type: ADD_ITEM_TO_CART_REQUEST })
+    // console.log("cartreqData",reqData)
 
     try {
-        const { data } =await axiosPublic.put('api/cart/add', reqData.data)
+        const { data } =await axiosPublic.put('api/cart/add',reqData)
         disPatch({ type: ADD_ITEM_TO_CART_SUCCESS, payload: data })
+        console.log("cart data",data)
     } catch (error) {
         disPatch({ type: ADD_ITEM_TO_CART_FAILURE, payload: error.message })
     }
 }
 
 
-export const removeCartItem = (reqData) => async (disPatch) => {
+export const removeCartItem = (cartItemId) => async (disPatch) => {
     disPatch({ type: REMOVE_CART_ITEM_REQUEST })
 
     try {
-        const { data } =await axiosPublic.delete(`api/cart_items${reqData.cartItemId}`)
-        disPatch({ type: REMOVE_CART_ITEM_SUCCESS, payload: data })
+        const { data } =await axiosPublic.delete(`api/cart_items/${cartItemId}`)
+        disPatch({ type: REMOVE_CART_ITEM_SUCCESS, payload: cartItemId })
     } catch (error) {
         disPatch({ type: REMOVE_CART_ITEM_FAILURE, payload: error.message })
     }
@@ -42,8 +45,10 @@ export const removeCartItem = (reqData) => async (disPatch) => {
 export const updateCartItem = (reqData) =>async (disPatch) => {
     disPatch({ type: UPDATE_CART_ITEM_REQUEST })
 
+    console.log("reqdata",reqData.data)
+
     try {
-        const { data } =await axiosPublic.put('api/cart/add', reqData.data)
+        const { data } =await axiosPublic.put(`api/cart_items/${reqData.CartItemId}`,reqData.data)
         disPatch({ type: UPDATE_CART_ITEM_SUCCESS, payload: data })
     } catch (error) {
         disPatch({ type: UPDATE_CART_ITEM_FAILURE, payload: error.message })
