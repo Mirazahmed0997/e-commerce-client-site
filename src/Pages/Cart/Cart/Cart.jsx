@@ -42,7 +42,7 @@ const Cart = () => {
                                 type="button"
                                 className="w-full sm:w-auto px-6 py-2 border rounded-md dark:border-violet-600"
                             >
-                                <Link to='/shop'>Back <span className="sr-only sm:not-sr-only">to shop</span></Link>
+                                <Link to='/'>Back <span className="sr-only sm:not-sr-only">to Home</span></Link>
                             </button>
                             <Link to='/checkOut?step=1'>
                                 <button

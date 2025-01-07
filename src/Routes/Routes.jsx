@@ -12,6 +12,12 @@ import Order from "../Pages/Order/Order/Order";
 import OrderDetails from "../Pages/Order/OrderDetails/OrderDetails";
 import SignUp from "../Pages/SignUp&LogIn/SignUp/SignUp";
 import Login from "../Pages/SignUp&LogIn/Login/Login";
+import Admin from "../Admin/Admin";
+import Dashboard from "../Admin/Components/Dashboard/Dashboard";
+import ProductsAdmin from "../Admin/Components/ProductsAdmin/ProductsAdmin";
+import AdminUsers from "../Admin/Components/AdminUsers/AdminUsers";
+import AdminOrders from "../Admin/Components/AdminOrders/AdminOrders";
+import AdminAddProducts from "../Admin/Components/AdminAddProducts/AdminAddProducts";
 
  export const router = createBrowserRouter([
     {
@@ -56,4 +62,31 @@ import Login from "../Pages/SignUp&LogIn/Login/Login";
         },
       ]
     },
+
+    {
+        path:'/admin',
+        element:<Admin></Admin>,
+        children: [
+          {
+            path:'/admin/dashboard',
+            element:<Dashboard></Dashboard>
+          },
+          {
+            path:'/admin/products',
+            element:<ProductsAdmin></ProductsAdmin>
+          },
+          {
+            path:'/admin/users',
+            element:<AdminUsers></AdminUsers>
+          },
+          {
+            path:'/admin/product/create',
+            element:<AdminAddProducts></AdminAddProducts>
+          },
+          {
+            path:'/admin/orders',
+            element:<AdminOrders></AdminOrders>
+          },
+        ]
+      }
   ]);
