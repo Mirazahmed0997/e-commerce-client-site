@@ -87,6 +87,7 @@ import AdminAddProducts from "../Admin/Components/AdminAddProducts/AdminAddProdu
             path:'/admin/orders',
             element:<AdminOrders></AdminOrders>
           },
+         
         ]
       }
   ]);
