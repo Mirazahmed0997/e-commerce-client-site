@@ -1,38 +1,46 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router';
+import { findProductsById } from '../../../State/Products/Action';
+import { store } from '../../../State/Store';
 import SharedTitle from '../../../Pages/Home/SharedTitle/SharedTitle';
-import { useDispatch } from 'react-redux';
-import { createProduct } from '../../../State/Products/Action';
 
+const EditProduct = () => {
 
-const AdminAddProducts = () => {
+    const params = useParams()
+    const disPatch = useDispatch()
+    const { singleProduct } = useSelector(store => store.AllProducts)
 
+    console.log(singleProduct)
 
+    useEffect(() => {
+        const productId = params.productId;
+        disPatch(findProductsById({ productId })); // Fetch product details
+    }, [params.productId]);
 
     const [formData, setFormData] = useState({
         title: "",
         brand: "",
         imageUrl: "",
-        sizes: [
-            { name: '', sizeQuantity: 0 },
-            { name: '', sizeQuantity: 0 },
-            { name: '', sizeQuantity: 0 },
-            { name: '', sizeQuantity: 0 },
-            { name: '', sizeQuantity: 0 },
-            { name: '', sizeQuantity: 0 }
-        ],
+        sizes: [{ name: '', sizeQuantity: 0 }],
         topLevelCategory: "",
         secondLevelCategory: "",
         thirdLevelCategory: "",
         color: "",
-        buyPrice: 0,
-        sellPrice: 0,
-        discountedPersent: 0,
-        discountedPrice: 0,
+        buyPrice: "",
+        sellPrice: "",
+        discountedPersent: "",
+        discountedPrice: "",
         stockQuantity: 0,
         description: "",
     });
 
-    const disPtach = useDispatch()
+    useEffect(() => {
+        if (singleProduct) {
+          setFormData(singleProduct); // Populate the form with product data
+        }
+      }, [singleProduct]);
+
     const jwt = localStorage.getItem("jwt")
 
     const handleChange = (e) => {
@@ -42,35 +50,33 @@ const AdminAddProducts = () => {
 
     const handleSizeChange = (e, index) => {
         const { name, value } = e.target;
-        const updatedSizes = [...formData.sizes];
-        
+        const updatedSizes = [formData.sizes];
+
         if (name === `size${index + 1}`) {
-          updatedSizes[index].size = value;
+            updatedSizes[index].size = value;
         } else if (name === `quantity${index + 1}`) {
-          updatedSizes[index].quantity = value;
+            updatedSizes[index].quantity = value;
         }
-    
+
         setFormData((prev) => ({
-          ...prev,
-          sizes: updatedSizes
+            ...prev,
+            sizes: updatedSizes
         }));
-    
+
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // disPtach(createProduct(formData))
         console.log("Form Data:", formData);
     };
 
     return (
-
         <div>
-            <SharedTitle title="create Product" />
+            <SharedTitle title="Update Product" />
             <section className="p-6 dark:bg-gray-900 dark:text-gray-50">
                 <form
                     noValidate
-                   onSubmit={handleSubmit}
+                    onSubmit={handleSubmit}
                     className="container flex flex-col mx-auto space-y-6"
                 >
                     {/* Product Details */}
@@ -83,6 +89,7 @@ const AdminAddProducts = () => {
                                     id="productName"
                                     name="title"
                                     type="text"
+                                    value={formData?.title}
                                     onChange={handleChange}
                                     placeholder="E.g., Comfortable Chair"
                                     className="w-full p-2 rounded-md border focus:ring-2 focus:ring-violet-600 dark:border-gray-700"
@@ -96,6 +103,7 @@ const AdminAddProducts = () => {
                                     name="brand"
                                     type="text"
                                     onChange={handleChange}
+                                    value={formData?.brand}
                                     placeholder="E.g., IKEA"
                                     className="w-full p-2 rounded-md border focus:ring-2 focus:ring-violet-600 dark:border-gray-700"
                                     required
@@ -107,6 +115,7 @@ const AdminAddProducts = () => {
                                     id="image"
                                     name="imageUrl"
                                     type="url"
+                                    value={formData?.imageUrl}
                                     onChange={handleChange}
                                     placeholder="E.g., https://example.com/image.jpg"
                                     className="w-full p-2 rounded-md border focus:ring-2 focus:ring-violet-600 dark:border-gray-700"
@@ -121,12 +130,16 @@ const AdminAddProducts = () => {
                         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
                             {Array(6).fill(0).map((_, i) => (
                                 <div key={i} className="space-y-2">
+                                    {/* Dropdown for Size */}
                                     <select
-                                        name={`size${i + 1}`}
+                                        name={`name${i + 1}`}
+                                        value={formData?.sizes[i]?.name || ""} // Set default value
                                         onChange={(e) => handleSizeChange(e, i)}
                                         className="select select-bordered w-full rounded-md"
                                     >
-                                        <option value="" disabled selected>Select Size</option>
+                                        <option value="" disabled>
+                                            Select Size
+                                        </option>
                                         <option value="S">S</option>
                                         <option value="M">M</option>
                                         <option value="L">L</option>
@@ -134,9 +147,12 @@ const AdminAddProducts = () => {
                                         <option value="XXL">XXL</option>
                                         <option value="XXXL">XXXL</option>
                                     </select>
+
+                                    {/* Input for Quantity */}
                                     <input
                                         type="number"
-                                        name={`quantity${i + 1}`}
+                                        name={`sizeQuantity${i + 1}`}
+                                        value={formData?.sizes[i]?.sizeQuantity || ""}  // Set default value
                                         onChange={(e) => handleSizeChange(e, i)}
                                         className="input input-bordered w-full rounded-md"
                                         placeholder="Quantity"
@@ -193,21 +209,75 @@ const AdminAddProducts = () => {
                     <fieldset className="p-6 rounded-md shadow-md dark:bg-gray-800 space-y-4">
                         <legend className="text-lg font-semibold">Pricing & Quantity</legend>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                            {['color', 'buyPrice', 'sellPrice', 'discountedPersent', 'discountedPrice', 'stockQuantity'].map((field, index) => (
-                                <div key={index}>
-                                    <label htmlFor={field} className="block text-sm font-medium capitalize">{field.replace(/([A-Z])/g, ' $1')}</label>
-                                    <input
-                                        id={field}
-                                        name={field}
-                                        onChange={handleChange}
-                                        type={field === 'buyPrice' || field === 'sellPrice'|| field === 'discountedPersent'|| field === 'discountedPrice'|| field === 'stockQuantity' ? 'number' : 'text'}
-                                        placeholder={`Enter ${field}`}
-                                        className="w-full p-2 rounded-md border focus:ring-2 focus:ring-violet-600 dark:border-gray-700"
-                                    />
-                                </div>
-                            ))}
+                            <div>
+                                <label htmlFor="color" className="block text-sm font-medium capitalize">Color</label>
+                                <input
+                                    id="color"
+                                    name="color"
+                                    type="text"
+                                    value={formData?.color}
+                                    className="w-full p-2 rounded-md border focus:ring-2 focus:ring-violet-600 dark:border-gray-700"
+                                    placeholder="Color"
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="buyPrice" className="block text-sm font-medium capitalize">Buy Price</label>
+                                <input
+                                    id="buyPrice"
+                                    name="buyPrice"
+                                    type="number"
+                                    value={formData?.buyPrice}
+                                    className="w-full p-2 rounded-md border focus:ring-2 focus:ring-violet-600 dark:border-gray-700"
+                                    placeholder="Buy Price"
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="sellPrice" className="block text-sm font-medium capitalize">Sell Price</label>
+                                <input
+                                    id="sellPrice"
+                                    name="sellPrice"
+                                    type="number"
+                                    value={formData?.sellPrice}
+                                    className="w-full p-2 rounded-md border focus:ring-2 focus:ring-violet-600 dark:border-gray-700"
+                                    placeholder="Sell Price"
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="discountedPrice" className="block text-sm font-medium capitalize">Discounted Price</label>
+                                <input
+                                    id="discountedPrice"
+                                    name="discountedPrice"
+                                    type="number"
+                                    value={formData?.discountedPrice}
+                                    className="w-full p-2 rounded-md border focus:ring-2 focus:ring-violet-600 dark:border-gray-700"
+                                    placeholder="Discounted Price"
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="discountedPrice" className="block text-sm font-medium capitalize">Discounted Percent</label>
+                                <input
+                                    id="discountedPersent"
+                                    name="discountedPersent"
+                                    type="number"
+                                    value={formData?.discountedPersent}
+                                    className="w-full p-2 rounded-md border focus:ring-2 focus:ring-violet-600 dark:border-gray-700"
+                                    placeholder="Discounted Price"
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="stockQuantity" className="block text-sm font-medium capitalize">Stock Quantity</label>
+                                <input
+                                    id="stockQuantity"
+                                    name="stockQuantity"
+                                    type="number"
+                                    value={formData?.stockQuantity}
+                                    className="w-full p-2 rounded-md border focus:ring-2 focus:ring-violet-600 dark:border-gray-700"
+                                    placeholder="Stock Quantity"
+                                />
+                            </div>
                         </div>
                     </fieldset>
+
 
                     {/* Description */}
                     <fieldset className="p-6 rounded-md shadow-md dark:bg-gray-800 space-y-4">
@@ -216,6 +286,7 @@ const AdminAddProducts = () => {
                             name="description"
                             onChange={handleChange}
                             placeholder="Enter a brief description of the product"
+                            value={formData?.description}
                             className="w-full p-2 rounded-md border focus:ring-2 focus:ring-violet-600 dark:border-gray-700"
                         ></textarea>
                     </fieldset>
@@ -233,4 +304,4 @@ const AdminAddProducts = () => {
     );
 };
 
-export default AdminAddProducts;
+export default EditProduct;

@@ -18,6 +18,7 @@ import ProductsAdmin from "../Admin/Components/ProductsAdmin/ProductsAdmin";
 import AdminUsers from "../Admin/Components/AdminUsers/AdminUsers";
 import AdminOrders from "../Admin/Components/AdminOrders/AdminOrders";
 import AdminAddProducts from "../Admin/Components/AdminAddProducts/AdminAddProducts";
+import EditProduct from "../Admin/Components/EditProduct/EditProduct";
 
  export const router = createBrowserRouter([
     {
@@ -86,6 +87,10 @@ import AdminAddProducts from "../Admin/Components/AdminAddProducts/AdminAddProdu
           {
             path:'/admin/orders',
             element:<AdminOrders></AdminOrders>
+          },
+          {
+            path:'/admin/update/products/:productId',
+            element:<EditProduct></EditProduct>
           },
          
         ]

@@ -61,10 +61,10 @@ export const createProduct = (product) => async (disPatch) => {
     disPatch({ type: CREATE_PRODUCTS_REQUEST })
     try {
 
-        const { data } = await axiosPublic.post(`/api/admin/products/${product.data}`)
+        const { data } = await axiosPublic.post(`/api/admin/products`,product)
 
         disPatch({ type: CREATE_PRODUCTS_SUCCESS, payload: data })
-        // console.log("product :",data)
+        console.log("product :",data)
 
 
 
