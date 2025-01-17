@@ -13,9 +13,9 @@ const OrderDetails = () => {
                 <h1 className='font-bold text-xl py-7'>Delivery Address</h1>
                 <AddressCart></AddressCart>
             </div>
-            <div className='py-20 shadow-lg'>
-                <OrderTracker activeStep={3}></OrderTracker>
-            </div>
+            {/* <div className='py-20 shadow-lg'>
+                <OrderTracker activeStep={0}></OrderTracker>
+            </div> */}
 
             <Grid container className='space-y-5 p-6 '>
                 {

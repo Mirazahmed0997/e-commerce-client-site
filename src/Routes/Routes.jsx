@@ -19,6 +19,7 @@ import AdminUsers from "../Admin/Components/AdminUsers/AdminUsers";
 import AdminOrders from "../Admin/Components/AdminOrders/AdminOrders";
 import AdminAddProducts from "../Admin/Components/AdminAddProducts/AdminAddProducts";
 import EditProduct from "../Admin/Components/EditProduct/EditProduct";
+import AdminDashboardOrders from "../Admin/Components/AdminDashboardOrders/AdminDashboardOrders";
 
  export const router = createBrowserRouter([
     {
@@ -60,7 +61,7 @@ import EditProduct from "../Admin/Components/EditProduct/EditProduct";
         {
             path:'/signIn',
             element:<Login></Login>
-        },
+        }
       ]
     },
 
@@ -91,6 +92,10 @@ import EditProduct from "../Admin/Components/EditProduct/EditProduct";
           {
             path:'/admin/update/products/:productId',
             element:<EditProduct></EditProduct>
+          },
+          {
+            path:'/admin/orders/details/:productId',
+            element:<AdminDashboardOrders></AdminDashboardOrders>
           },
          
         ]

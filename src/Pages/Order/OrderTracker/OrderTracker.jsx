@@ -3,7 +3,7 @@ import React from 'react';
 
 const OrderTracker = ({activeStep}) => {
     const steps= [
-        "Placed",
+        "Pending",
         "Order Confirmed",
         "Shipped",
         "Out For Delivery",

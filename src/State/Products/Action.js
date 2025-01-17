@@ -23,7 +23,8 @@ export const findProducts = (reqData) => async (disPatch) => {
     try {
         // const {data}=await useAxios.get(`api/products?&pageNumber=${pageNumber}`)
 
-        const { data } = await useAxios.get(`api/products?category=${category}&color=${color}&size=${sizes}&minPrice=${minPrice}&stock=${stock}&pageSize=${pageSize}&sort=${sort}&maxPrice=${maxPrice}&pageNumber=${pageNumber}&minDiscount=${minDiscount}`)
+        const { data } = await useAxios.get(`api/products?category=${category}&color=${color}&size=${sizes}`)
+        // const { data } = await useAxios.get(`api/products?category=${category}&color=${color}&size=${sizes}&minPrice=${minPrice}&stock=${stock}&pageSize=${pageSize}&sort=${sort}&maxPrice=${maxPrice}&pageNumber=${pageNumber}&minDiscount=${minDiscount}&sort=${sort}`)
 
         console.log("product data", data)
         disPatch({ type: FIND_PRODUCTS_SUCCESS, payload: data })
@@ -58,6 +59,7 @@ export const findProductsById = (reqData) => async (disPatch) => {
 
 
 export const createProduct = (product) => async (disPatch) => {
+    console.log(product)
     disPatch({ type: CREATE_PRODUCTS_REQUEST })
     try {
 

@@ -10,12 +10,15 @@ import { router } from './Routes/Routes';
 import App from './App';
 import { Provider } from 'react-redux';
 import { store } from './State/Store';
+import ScrollToTop from './ScrollToTop/ScrollToTop';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <RouterProvider router={router} >
+        <ScrollToTop></ScrollToTop>
+      </RouterProvider>
     </Provider>
   </React.StrictMode>
 );

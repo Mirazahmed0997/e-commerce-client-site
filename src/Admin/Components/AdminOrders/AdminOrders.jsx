@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { store } from '../../../State/Store';
-import { deleteOrder, getOrders } from '../../../State/Admin/Orders/Action';
+import { confirmOrder, deleteOrder, deliverOrder, getOrders, shipOrder } from '../../../State/Admin/Orders/Action';
 import SharedTitle from '../../../Pages/Home/SharedTitle/SharedTitle';
 import { Link } from 'react-router';
 import Swal from 'sweetalert2';
@@ -39,119 +39,123 @@ const AdminOrders = () => {
         });
     }
 
+    const handleShipOrder = (orderId) => {
+        disPatch(shipOrder(orderId))
+    }
+    const handleConfirmedOrder = (orderId) => {
+        disPatch(confirmOrder(orderId))
+    }
+    const handleDeliverdOrder = (orderId) => {
+        disPatch(deliverOrder(orderId))
+    }
+    // const handlePendingOrder=(orderId)=>
+    // {
+    //     disPatch(pendii(orderId))
+    // }
+
     return (
-        <div>
+        <div className="">
             <SharedTitle title="All Orders"></SharedTitle>
             <div className="overflow-x-auto">
-                <table className="table">
+                <table className="table w-full">
                     {/* head */}
                     <thead>
                         <tr>
                             <th></th>
                             <th>Title</th>
-                            <th>Price</th>
-                            <th>Discount Percent</th>
-                            <th>Total Discount Price</th>
                             <th>Total Price</th>
-                            <th>Address</th>
+                            <th>Status</th>
+                            <th>Update</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {/* row 1 */}
-                        {
-                            adminOrder?.orders?.map((item =>
-                                <tr className='shadow-2xl'>
-
-                                    <td >
-                                        <div className="avatar-group -space-x-6 rtl:space-x-reverse">
-                                            {
-                                                item?.orderItems?.map((orderItem) =>
-                                                    <div className="avatar">
-                                                        <div className="w-12">
-                                                            <img src={orderItem?.product?.imageUrl}  />
-                                                        </div>
-                                                    </div>)
-                                            }
-
-                                        </div>
-
-                                        {/* <div className="flex items-center gap-3">
+                        {/* rows */}
+                        {adminOrder?.orders?.map((item) => (
+                            <tr className="shadow-md">
+                                {/* Order Items */}
+                                <td>
+                                    <div className="avatar-group -space-x-6 rtl:space-x-reverse">
+                                        {item?.orderItems?.map((orderItem) => (
                                             <div className="avatar">
-                                                {
-                                                    item?.orderItems?.map((orderItem) =>
-                                                        <div className="mask mask-squircle h-16 w-16">
-                                                            <img
-                                                                src={orderItem?.product?.imageUrl} />
-                                                        </div>)
-                                                }
+                                                <div className="w-12 sm:w-10">
+                                                    <img
+                                                        src={orderItem?.product?.imageUrl}
+                                                        alt={orderItem?.product?.title}
+                                                        className="rounded-full object-cover"
+                                                    />
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </td>
 
-                                            </div>
-                                            <div>
-                                                <div className="text-sm opacity-50">Total Item: {item.totalItem}</div>
-                                            </div>
-                                        </div> */}
-                                    </td>
-                                    {item?.orderItems?.map(orderItem => (
-                                        <tr key={orderItem?.product?._id}>
-                                            <td>{orderItem?.product?.title}</td>
-                                        </tr>
+                                {/* Titles */}
+                                <td>
+                                    {item?.orderItems?.map((orderItem) => (
+                                        <div key={orderItem?.product?._id} className="text-sm sm:text-xs">
+                                            {orderItem?.product?.title}.
+                                        </div>
                                     ))}
+                                </td>
 
+                                {/* Price */}
+                                <td className="text-left text-lg sm:text-sm">
+                                    {item.totalPrice} BDT
+                                </td>
+                                {/* <td className="text-left text-lg sm:text-sm">
+                                    {item?.orderStatus}
+                                </td> */}
 
-                                    <td>  {item?.orderItems?.map(orderItem => (
-                                        <tr key={orderItem?.product?._id}>
-                                            <td>{orderItem?.product?.discountedPrice}</td>
-                                        </tr>
-                                    ))}</td>
-                                    <td>  {item?.orderItems?.map(orderItem => (
-                                        <tr key={orderItem?.product?._id}>
-                                            <td>{orderItem?.product?.discountedPersent} %</td>
-                                        </tr>
-                                    ))}</td>
+                                {/* Status Dropdown */}
+                                <td>
+                                    <div className="dropdown dropdown-end">
+                                        <div
+                                            tabIndex={0}
+                                            role="button"
+                                            className="btn btn-sm sm:btn-xs"
+                                        >
+                                            {item?.orderStatus}
+                                        </div>
+                                        <ul
+                                            tabIndex={0}
+                                            className="dropdown-content menu bg-base-100 rounded-box shadow-lg z-[100] w-32"
+                                        >
+                                            <li>
+                                                <a onClick={() => handleConfirmedOrder(item?._id)}>CONFIRMED</a>
+                                            </li>
+                                            <li>
+                                                <a onClick={() => handleShipOrder(item?._id)}>SHIPPED</a>
+                                            </li>
+                                            <li>
+                                                <a onClick={() => handleDeliverdOrder(item?._id)}>DELIVERED</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
 
-                                    <td>{item.discount}</td>
-
-                                    <td>{item.totalPrice}</td>
-
-
-                                    <td>
-                                        <tr>
-                                            <td>Name : {item.shippingAddress?.firstName}, {item.shippingAddress?.lastName} <br />Address : {item.shippingAddress?.streetAddress}  {item.shippingAddress?.city} -{item.shippingAddress?.zipCode}, <br /> Contact: {item.shippingAddress?.mobile} </td>
-
-                                        </tr>
-
-                                    </td>
-
-
-                                    <th>
-                                        <button onClick={() => handleOrderDelete(item._id)} className="btn btn-ghost btn-xs">Delete</button>
-                                    </th>
-                                    <th>
-                                        <Link to={`/admin/update/products/${item._id}`}><button className="btn btn-ghost btn-xs">Edit</button></Link>
-                                    </th>
-                                </tr>
-                            ))
-                        }
-
-
-                    </tbody>
-                    {/* <tfoot>
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th>Name</th>
-                                <th>Job</th>
-                                <th>Favorite Color</th>
-                                <th></th>
+                                {/* Actions */}
+                                <td>
+                                    <button
+                                        onClick={() => handleOrderDelete(item._id)}
+                                        className="btn btn-ghost btn-sm sm:btn-xs"
+                                    >
+                                        Delete
+                                    </button>
+                                </td>
+                                <td>
+                                    <Link to={`/admin/orders/details/${item._id}`}>
+                                        <button className="btn btn-ghost btn-sm sm:btn-xs">
+                                            Details
+                                        </button>
+                                    </Link>
+                                </td>
                             </tr>
-                        </tfoot> */}
-
-
+                        ))}
+                    </tbody>
                 </table>
             </div>
-
         </div>
+
     );
 };
 

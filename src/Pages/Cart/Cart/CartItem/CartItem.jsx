@@ -8,14 +8,14 @@ import Swal from 'sweetalert2';
 const CartItem = ({ item }) => {
 
     const disPatch = useDispatch();
-    console.log("item", item)
+    // console.log("item", item.product.discountedPercent)
     const handleUpdateCart = (num) => {
         console.log("clicked", num)
         const data = {
             data: { data: { quantity: item.quantity + num } }, // Ensure this matches the reducer's expected structure
             CartItemId: item?._id
         };
-        // console.log("clicked data",data)
+        console.log("clicked data", data)
 
         disPatch(updateCartItem(data));
     }
@@ -29,19 +29,19 @@ const CartItem = ({ item }) => {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, delete it!"
-          }).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
-              Swal.fire({
-                title: "Deleted!",
-                text: "Your file has been deleted.",
-                icon: "success"
-              });
-              disPatch(removeCartItem(item._id))
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success"
+                });
+                disPatch(removeCartItem(item._id))
             }
-            
-          });
-          
-       
+
+        });
+
+
     }
 
 
@@ -53,15 +53,15 @@ const CartItem = ({ item }) => {
                         <div className="flex flex-col sm:flex-row w-full space-y-4 sm:space-y-0 sm:space-x-4">
                             <img
                                 className="flex-shrink-0 object-cover w-full h-40 sm:w-32 sm:h-32 rounded dark:bg-gray-500"
-                                src={item.product.imageUrl}
+                                src={item.product?.thumNailImage}
                                 alt="Polaroid camera"
                             />
                             <div className="flex flex-col justify-between w-full pb-4">
                                 <div className="flex justify-between w-full pb-2 space-x-2">
                                     <div className="space-y-1">
                                         <h3 className="text-lg font-semibold leading-snug sm:pr-8">{item.product?.title}</h3>
-                                        <p className="text-sm dark:text-gray-600 opacity-50">Size: {item?.size}, Color:  {item.product?.color}</p>
-                                        <p className="text-sm dark:text-gray-600 opacity-50">{item.product.brand}</p>
+                                        <p className="text-sm dark:text-gray-600 opacity-50">Size: {item?.size}, Color:  {item?.color}</p>
+                                        <p className="text-sm dark:text-gray-600 opacity-50">{item.product?.brand}</p>
 
                                     </div>
                                     <div className="text-right">
@@ -70,7 +70,19 @@ const CartItem = ({ item }) => {
                                         <> <p className="text-lg font-semibold">Total Price: {item?.price}/-</p></>
 
                                         {/* <p className="text-sm dark:text-gray-600">Total Discount : {item?.discountedPrice} tk</p> */}
-                                        <p className="text-sm dark:text-gray-600 line-through">{item?.product?.discountedPersent}% off</p>
+
+
+                                        {item?.discountedPercent ? (
+
+                                            <> <p className="font-semibold"></p></>
+
+                                        ) : (
+                                            <>
+                                                <p className="text-sm dark:text-gray-600 line-through">{item?.product?.discountedPercent
+                                                }% off</p>
+                                            </>
+                                        )}
+
                                         {/* <p className="text-lg font-semibold">Discount: {item?.discountedPrice}</p>
                                         <p className="text-lg font-semibold">Discount: {item?.product?.discountedPersent}%</p> */}
                                     </div>

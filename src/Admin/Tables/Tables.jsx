@@ -14,10 +14,7 @@ const Tables = () => {
 
     console.log("table products", AllProducts?.products?.content)
 
-    // const item = AllProducts?.products?.content?.map(product=>{
-    //     console.log(product)
-    // })
-    //     //   console.log("item",item)
+   
 
     const handleProductDelete = (productId) => {
 
@@ -56,7 +53,7 @@ const Tables = () => {
             minDiscount: 0,
             sort: "price_low",
             pageNumber: 1,
-            pageSize: 100,
+            pageSize: 10000,
             stock: ""
         };
 
@@ -108,7 +105,7 @@ const Tables = () => {
                                     </td>
 
                                     <td>
-                                        {item?.category?.name}
+                                        {item?.categoryName}
                                     </td>
 
                                     <td>{item.sellPrice}</td>

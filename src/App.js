@@ -6,6 +6,7 @@ import Footer from './Pages/Shared/Footer/Footer';
 import Products from './Pages/Products/Products/Products';
 import { Route, Routes } from 'react-router';
 import AdminRoutes from './Routes/AdminRoutes';
+import ScrollToTop from './ScrollToTop/ScrollToTop';
 
 function App() {
   return (

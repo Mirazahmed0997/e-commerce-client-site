@@ -29,7 +29,7 @@ const EditProduct = () => {
         color: "",
         buyPrice: "",
         sellPrice: "",
-        discountedPersent: "",
+        discountedPercent: "",
         discountedPrice: "",
         stockQuantity: 0,
         description: "",
@@ -67,6 +67,7 @@ const EditProduct = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setFormData(formData)
         console.log("Form Data:", formData);
     };
 
@@ -259,7 +260,7 @@ const EditProduct = () => {
                                     id="discountedPersent"
                                     name="discountedPersent"
                                     type="number"
-                                    value={formData?.discountedPersent}
+                                    value={formData?.discountedPercent}
                                     className="w-full p-2 rounded-md border focus:ring-2 focus:ring-violet-600 dark:border-gray-700"
                                     placeholder="Discounted Price"
                                 />

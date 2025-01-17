@@ -64,6 +64,14 @@ export const color = [
     //       { "value": "80", "label": "80% And Above" }
     //     ]
     //   },
+    {
+        "id": "sort",
+        "name": "sort",
+        "options": [
+          { "value": "Price_high", "label": "Price : High To Low" },
+          
+        ]
+      },
       {
         "id": "stock",
         "name": "Availability",
