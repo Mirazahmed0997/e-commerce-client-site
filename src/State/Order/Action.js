@@ -27,6 +27,7 @@ export const createOrder = (reqData) => async (disPatch) => {
 
 export const getOrderById = (orderId) => async (disPatch) => {
     disPatch({ type: GET_ORDER_BY_ID_REQUEST })
+    // console.log(orderId.orderId)
 
     try {
         const { data } = await axiosPublic.get(`api/orders/${orderId}`)

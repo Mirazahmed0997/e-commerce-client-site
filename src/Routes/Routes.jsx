@@ -20,6 +20,7 @@ import AdminOrders from "../Admin/Components/AdminOrders/AdminOrders";
 import AdminAddProducts from "../Admin/Components/AdminAddProducts/AdminAddProducts";
 import EditProduct from "../Admin/Components/EditProduct/EditProduct";
 import AdminDashboardOrders from "../Admin/Components/AdminDashboardOrders/AdminDashboardOrders";
+import Invoice from "../Pages/Invoices/Invoice";
 
  export const router = createBrowserRouter([
     {
@@ -49,6 +50,10 @@ import AdminDashboardOrders from "../Admin/Components/AdminDashboardOrders/Admin
         {
             path:'/account/myOrders',
             element:<Order></Order>
+        },
+        {
+            path:'/account/myOrders/invoice',
+            element:<Invoice></Invoice>
         },
         {
             path:'/account/myOrders/:orderId',

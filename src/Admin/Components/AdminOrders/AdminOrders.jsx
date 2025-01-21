@@ -79,7 +79,7 @@ const AdminOrders = () => {
                                             <div className="avatar">
                                                 <div className="w-12 sm:w-10">
                                                     <img
-                                                        src={orderItem?.product?.imageUrl}
+                                                        src={orderItem?.product?.thumNailImage}
                                                         alt={orderItem?.product?.title}
                                                         className="rounded-full object-cover"
                                                     />

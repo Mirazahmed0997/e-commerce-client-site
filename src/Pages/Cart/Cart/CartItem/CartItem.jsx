@@ -1,5 +1,5 @@
 import { IconButton } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useDispatch } from 'react-redux';
@@ -8,7 +8,10 @@ import Swal from 'sweetalert2';
 const CartItem = ({ item }) => {
 
     const disPatch = useDispatch();
-    // console.log("item", item.product.discountedPercent)
+    // const [quantities,setQuantities]=useState([])
+        // setQuantities(item.quantity)
+        // console.log(quantities)
+    console.log("item", item)
     const handleUpdateCart = (num) => {
         console.log("clicked", num)
         const data = {

@@ -94,7 +94,7 @@ const Tables = () => {
                                             <div className="avatar">
                                                 <div className="mask mask-squircle h-16 w-16">
                                                     <img
-                                                        src={item.imageUrl} />
+                                                        src={item.thumNailImage} />
                                                 </div>
                                             </div>
                                             <div>
@@ -110,7 +110,9 @@ const Tables = () => {
 
                                     <td>{item.sellPrice}</td>
 
-                                    <td>{item.discountedPrice}</td>
+                                   {
+                                    item.discountedPercent?<><td>{item.discountedPrice}</td></>:<p></p>
+                                   }
 
                                     <td>{item.buyPrice}</td>
 

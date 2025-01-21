@@ -21,7 +21,7 @@ const OrderCard = ({ item }) => {
                         item?.orderItems?.map((orderItem) =>
                             <div className="avatar">
                                 <div className="w-12">
-                                    <img src={orderItem?.product?.imageUrl} />
+                                    <img src={orderItem?.product?.thumNailImage} />
                                 </div>
                             </div>)
                     }

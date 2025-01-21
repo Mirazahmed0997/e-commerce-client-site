@@ -11,7 +11,7 @@ const OrdersummaryCart = ({item}) => {
                         <div className="flex flex-col sm:flex-row w-full space-y-4 sm:space-y-0 sm:space-x-4">
                             <img
                                 className="flex-shrink-0 object-cover w-full h-40 sm:w-32 sm:h-32 rounded dark:bg-gray-500"
-                                src={item.product.imageUrl}
+                                src={item.product.thumNailImage}
                                 alt="Polaroid camera"
                             />
                             <div className="flex flex-col justify-between w-full pb-4">
@@ -30,7 +30,7 @@ const OrdersummaryCart = ({item}) => {
                                         }/-</p></>
 
                                         {/* <p className="text-sm dark:text-gray-600">Total Discount : {item?.discountedPrice} tk</p> */}
-                                        <p className="text-sm dark:text-gray-600 line-through">{item?.product?.discountedPersent}% off</p>
+                                        <p className="text-sm dark:text-gray-600 line-through">{item?.product?.discountedPercent}% off</p>
                                         {/* <p className="text-lg font-semibold">Discount: {item?.discountedPrice}</p>
                                         <p className="text-lg font-semibold">Discount: {item?.product?.discountedPersent}%</p> */}
                                     </div>
