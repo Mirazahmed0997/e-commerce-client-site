@@ -83,7 +83,7 @@ const AdminAddProducts = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         disPtach(createProduct(formData))
-        console.log("Form Data:", formData);
+        // console.log("Form Data:", formData);
     };
 
     return (

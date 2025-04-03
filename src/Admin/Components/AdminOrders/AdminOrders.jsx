@@ -18,6 +18,8 @@ const AdminOrders = () => {
 
     const handleOrderDelete = (orderId) => {
 
+        console.log("deleted id",orderId)
+
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -143,11 +145,16 @@ const AdminOrders = () => {
                                     </button>
                                 </td>
                                 <td>
-                                    <Link to={`/admin/orders/details/${item._id}`}>
+                                <Link to={`/account/myOrders/${item?._id}`}>
                                         <button className="btn btn-ghost btn-sm sm:btn-xs">
                                             Details
                                         </button>
                                     </Link>
+                                    {/* <Link to={`/admin/orders/details/${item._id}`}>
+                                        <button className="btn btn-ghost btn-sm sm:btn-xs">
+                                            Details
+                                        </button>
+                                    </Link> */}
                                 </td>
                             </tr>
                         ))}

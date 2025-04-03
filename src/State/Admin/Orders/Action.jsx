@@ -69,6 +69,7 @@ export const placeOrder = (orderId) => async (disPatch) => {
 
 }
 export const deleteOrder = (orderId) => async (disPatch) => {
+    console.log("deleted id",orderId)
     disPatch({ type: DELETE_ORDER_REQUEST })
     try {
         const {data} = await axiosPublic.delete(`api/admin/orders/${orderId}/deleted`)

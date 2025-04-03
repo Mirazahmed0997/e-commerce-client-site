@@ -15,7 +15,8 @@ export const findProducts = (reqData) => async (disPatch) => {
     //   sorting is impliment yet
 
 
-    const { category, color, sizes, minPrice, maxPrice, minDiscount, sort, stock, pageNumber, pageSize } = reqData
+    const { category, color, sizes } = reqData
+    // const { category, color, sizes, minPrice, maxPrice, minDiscount, sort, stock, pageNumber, pageSize } = reqData
 
     console.log("action req data", reqData)
 
@@ -59,7 +60,7 @@ export const findProductsById = (reqData) => async (disPatch) => {
 
 
 export const createProduct = (product) => async (disPatch) => {
-    console.log(product)
+    // console.log(product)
     disPatch({ type: CREATE_PRODUCTS_REQUEST })
     try {
 

@@ -108,7 +108,7 @@ const OrderDetails = () => {
                     </div>
                     <div>
                         <h2 className="text-lg font-bold">To:</h2>
-                        <p>{order?.order?.user?.firstName} {order?.order?.user?.lastName},</p>
+                        <p>{order?.order?.shippingAddress?.firstName} {order?.order?.shippingAddress?.lastName},</p>
                         <p>{order?.order?.shippingAddress?.state}</p>
                         <p>{order?.order?.shippingAddress?.streetAddress}</p>
                         <p>{order?.order?.shippingAddress?.city}- {order?.order?.shippingAddress?.zipCode}</p>
@@ -159,9 +159,9 @@ const OrderDetails = () => {
 
                 {/* Notes */}
                 {notes && (
-                    <div className="mt-6">
-                        <h2 className="text-lg font-bold">Notes:</h2>
-                        <p className="text-gray-600">{notes}</p>
+                    <div className="mt-6 P-16">
+                        <h2 className="text-lg font-bold">ORDER {order?.order?.orderStatus}</h2>
+                        <p className="text-gray-600"></p>
                     </div>
                 )}
             </div>

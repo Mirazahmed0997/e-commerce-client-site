@@ -15,6 +15,8 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 import Swal from 'sweetalert2'
+import ReviewModal from '../../Review&Rating/Review/ReviewModal'
+import { getReviews } from '../../../State/Review&Rating/Review/Action'
 
 const product = {
     name: 'Basic Tee 6-Pack',
@@ -83,6 +85,7 @@ export default function ProductDetails() {
     const params = useParams()
     const disPatch = useDispatch();
     const { singleProduct } = useSelector(store => store.AllProducts)
+    const {reviews} = useSelector(store=>store.Reviews)
     const [selectedSize, setSelectedSize] = useState(null);
     const [selectedColors, setSelectedColors] = useState([]);
     const [quantity, setQuantity] = useState(1); // Initialize quantity to 1
@@ -92,7 +95,14 @@ export default function ProductDetails() {
 
     useEffect(() => {
         const productId = params.productId;
+        console.log("ID", productId)
         disPatch(findProductsById({ productId })); // Fetch product details
+    }, [params.productId]);
+
+
+    useEffect(() => {
+        const productId = params.productId;
+        disPatch(getReviews({ productId })); // Fetch  reviews
     }, [params.productId]);
 
     // Ensure there is a default image selected on load
@@ -365,12 +375,13 @@ export default function ProductDetails() {
 
                     <section className="mt-32 md:p-6">
                         <h1 className="font-semibold text-lg pb-4">Recent Reviews & Ratings</h1>
+                        <ReviewModal singleProduct={singleProduct}></ReviewModal>
                         <div className="border p-5">
                             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
                                 {/* Reviews Column */}
                                 <div className="lg:col-span-7 space-y-5">
-                                    {[1, 1, 1].map((item, index) => (
-                                        <ProductReviewCard key={index}></ProductReviewCard>
+                                    {reviews?.map((items, index) => (
+                                        <ProductReviewCard key={index} items={items}></ProductReviewCard>
                                     ))}
                                 </div>
 
@@ -410,14 +421,14 @@ export default function ProductDetails() {
 
 
                     {/* -----similiar products------ */}
-                    <section className='pt-20'>
+                    {/* <section className='pt-20'>
                         <h2 className='py-5 font-bold text-xl'> Similiar Products</h2>
                         <div className='flex flex-wrap justify-center space-y-5'>
                             {
                                 womenDress.map((item) => <ProductsCard Products={item}></ProductsCard>)
                             }
                         </div>
-                    </section>
+                    </section> */}
 
                 </div>
             </div>

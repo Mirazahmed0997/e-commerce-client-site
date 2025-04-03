@@ -33,7 +33,7 @@ const Cart = () => {
                                 <span className="font-semibold"> {cart.cart?.totalPrice} tk</span>
                             </p>
                             <p className="text-sm dark:text-gray-600">Total Item : {cart.cart?.totalItem} </p>
-                            <p className="text-sm dark:text-gray-600">Discount : {cart.cart?.discount} tk</p>
+                            {/* <p className="text-sm dark:text-gray-600">Discount : {cart.cart?.discount} tk</p> */}
                             <p className="text-sm dark:text-gray-600">Excluded Delivery Charge 60 tk in Dhaka</p>
                             {/* <p className="text-sm dark:text-gray-600">Not including taxes and shipping costs</p> */}
                         </div>
